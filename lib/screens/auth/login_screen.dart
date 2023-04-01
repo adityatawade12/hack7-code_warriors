@@ -142,8 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Text("Login"),
                             onPressed: () async {
                               var status = await auth.signIn(
-                                  emailController.text,
-                                  passController.text);
+                                emailController.text,
+                                passController.text
+                              );
                               // print("noauth");
                               if (status != null) {
                                 Navigator.of(context).pushReplacementNamed(HomeScreen.routename);

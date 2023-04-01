@@ -38,8 +38,8 @@ dependencies:
   awesome_notifications: ^0.7.4+1
   qrscan: ^0.3.3
   permission_handler: ^9.2.0
-
-
+  solana_web3: ^0.0.8
+  
 
 dev_dependencies:
   flutter_test:

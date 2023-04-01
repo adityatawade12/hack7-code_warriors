@@ -24,13 +24,13 @@ class AuthService with ChangeNotifier {
       var user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      // uid = user.user!.uid;
-      // var db = FirebaseFirestore.instance;
-      // var userData = await db.collection('users').doc(user.user!.uid).get();
-      // var data = userData.data();
-      // primaryAddress = userData.data()!['vpa'];
-      // loggedInUser =
-      //     LoggedInUser(data!['name'], data['vpa'], data['primaryAccount']);
+      uid = user.user!.uid;
+      var db = FirebaseFirestore.instance;
+      var userData = await db.collection('users').doc(user.user!.uid).get();
+      var data = userData.data();
+      primaryAddress = userData.data()!['vpa'];
+      loggedInUser =
+          LoggedInUser(data!['name'], data['vpa'], data['primaryAccount']);
       getUserData();
       notifyListeners();
       return user;

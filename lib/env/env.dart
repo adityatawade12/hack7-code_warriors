@@ -14,7 +14,10 @@ abstract class Env {
   static const NOTIFKEY = _Env.NOTIFKEY;
 
   @EnviedField()
-  static const EXCHANGEKEY = _Env.EXCHANGEKEY;
+  static const EXCHANGEKEYETH = _Env.EXCHANGEKEYETH;
+
+  @EnviedField()
+  static const EXCHANGEKEYSOL = _Env.EXCHANGEKEYSOL;
 
   @EnviedField()
   static const SOL = _Env.SOL;
