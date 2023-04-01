@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hack7/auth/LoginScreen.dart';
+import 'package:hack7/screens/SplashScreen.dart';
+import 'package:hack7/screens/auth/LoginScreen.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          initialRoute: LoginScreen.routename,
-          routes: {LoginScreen.routename: (ctx) => LoginScreen()},
+          initialRoute: SplashScreen.routename,
+          routes: {
+            LoginScreen.routename: (ctx) => LoginScreen(),
+            SplashScreen.routename: (ctx) => SplashScreen()
+          },
         ));
   }
 }
