@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          initialRoute: AddAccountScreen.routename,
+          initialRoute: HomeScreen.routename,
           routes: {
             LoginScreen.routename: (ctx) => LoginScreen(),
             SplashScreen.routename: (ctx) => SplashScreen(),

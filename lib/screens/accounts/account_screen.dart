@@ -22,8 +22,6 @@ class _AccountScreenState extends State<AccountScreen>
   Animation<double>? topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
-  List<Widget> listViewsEmpty = <Widget>[];
-  List<Widget> listViewsFilled = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
@@ -199,8 +197,7 @@ class _AccountScreenState extends State<AccountScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -258,7 +255,7 @@ class _AccountScreenState extends State<AccountScreen>
                                       size: 35,
                                       // color: ,
                                     )),
-                              /*   FutureBuilder(
+                                /*   FutureBuilder(
                                     future: Provider.of<Web3Api>(context,
                                             listen: false)
                                         .getPaymentRequests(
