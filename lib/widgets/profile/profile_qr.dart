@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/themes/apptheme.dart';
+import 'package:hack7/widgets/no_vpa.dart';
+import 'package:hack7/widgets/vpaQrBox.dart';
+import 'package:provider/provider.dart';
 
 class ProfileQrView extends StatelessWidget {
   final AnimationController? animationController;
@@ -10,7 +14,7 @@ class ProfileQrView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var auth = Provider.of<AuthService>(context, listen: false);
+    var auth = Provider.of<AuthService>(context, listen: false);
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -20,14 +24,14 @@ class ProfileQrView extends StatelessWidget {
             transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - animation!.value), 0.0),
             child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 15, right: 15, top: 2, bottom: 18),
+              padding: const EdgeInsets.only(
+                  left: 15, right: 15, top: 2, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [
-                    AppTheme.mainBlue,
-                    AppTheme.nearlyBlue
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                  gradient: const LinearGradient(
+                      colors: [AppTheme.mainBlue, AppTheme.nearlyBlue],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -45,8 +49,7 @@ class ProfileQrView extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const <Widget> [
-
+                    children: <Widget>[
                       // Padding(
                       //   padding: const EdgeInsets.only(top: 8.0),
                       //   child: const Text(
@@ -62,7 +65,8 @@ class ProfileQrView extends StatelessWidget {
                       //   ),
                       // ),
                       SizedBox(height: 10),
-                      /* Container(
+                      Container(),
+                      Container(
                         width: 210,
                         height: 210,
                         padding: const EdgeInsets.all(10),
@@ -76,13 +80,11 @@ class ProfileQrView extends StatelessWidget {
                                 blurRadius: 10.0),
                           ],
                         ),
-                        child: (auth.loggedInUser.primaryAccount == "")
+                        child: (auth.loggedInUser.primaryAccountEth == "")
                             ? NoVpa()
                             : VPAQr(auth.loggedInUser.vpa),
                       ),
- */
-                      
-                      
+
                       // Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: Row(
@@ -109,8 +111,8 @@ class ProfileQrView extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        "loggedInUser",
-                        // auth.loggedInUser.vpa,
+                        // "loggedInUser",
+                        auth.loggedInUser.vpa,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: AppTheme.fontName,
@@ -124,8 +126,8 @@ class ProfileQrView extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "loggedInUser",
-                        // auth.loggedInUser.name,
+                        // "loggedInUser",
+                        auth.loggedInUser.name,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: AppTheme.fontName,

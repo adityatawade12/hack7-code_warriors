@@ -39,7 +39,7 @@ dependencies:
   qrscan: ^0.3.3
   permission_handler: ^9.2.0
   solana_web3: ^0.0.8
-  
+  infinite_carousel: ^1.0.2
 
 dev_dependencies:
   flutter_test:

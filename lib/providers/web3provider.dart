@@ -59,7 +59,7 @@ class Web3EthProvider with ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
-      "accounts": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
+      "eth": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
     });
     notifyListeners();
 
@@ -95,7 +95,7 @@ class Web3EthProvider with ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
-      "accounts": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
+      "eth": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
     });
 
     notifyListeners();
