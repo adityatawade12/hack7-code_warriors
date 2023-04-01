@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hack7/models/account.dart';
 import 'package:hive/hive.dart';
 import 'package:tuple/tuple.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -18,7 +18,7 @@ import '../env/env.dart';
 class Web3EthProvider with ChangeNotifier {
   double etherCount = 0.0;
   int rupee = 0;
-
+  List<Account> _accounts = [];
   String exchangeAPI = Env.EXCHANGEKEY;
 
   String rpcUrl = Env.DEV;
@@ -58,6 +58,119 @@ class Web3EthProvider with ChangeNotifier {
     notifyListeners();
 
     return Account(newAccount.accountAddress, plainText, name, category);
+  }
+
+  Future<Account> importAccount(
+      String name, String pin, String privateKey, String category) async {
+    //Generating pin hash
+    final hashingAlgo = Sha256();
+    final hash = await hashingAlgo.hash(utf8.encode(pin));
+    var pin2 = bytesToHex(hash.bytes);
+
+    // Creating account
+
+    EthPrivateKey credentials = EthPrivateKey.fromHex(privateKey);
+    var address = await credentials.extractAddress();
+
+    //Encrypting account private key
+    EncryptionLib enc = EncryptionLib();
+    String plainText = bytesToHex(credentials.privateKey);
+    var encrypted = enc.encryptAESCryptoJS(plainText, pin2);
+
+    Account newAccount = Account(address.hex, encrypted, name, category);
+
+    // var decrypted = enc.decryptAESCryptoJS(encrypted, pin2);
+
+    var accounts = await Hive.openBox<Account>('accounts');
+    await accounts.put(newAccount.accountAddress, newAccount);
+    await fetchStoredAccounts();
+    var db = FS.FirebaseFirestore.instance;
+    await db
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      "accounts": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
+    });
+
+    notifyListeners();
+
+    return Account(newAccount.accountAddress, plainText, name);
+  }
+
+  Future<void> fetchStoredAccounts() async {
+    print('Fetch User');
+    print(FirebaseAuth.instance.currentUser);
+    var db = FS.FirebaseFirestore.instance;
+    var userD = await db
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    var accs = userD.data()!['accounts'];
+
+    var accounts = await Hive.openBox<Account>('accounts');
+
+    List<Account> items = [];
+    for (var element in accs) {
+      if (accounts.get(element) != null) {
+        items.add(accounts.get(element)!);
+      }
+    }
+
+    // print(it);
+    // var items = accounts.values.toList().reversed.toList();
+    // accounts.close();
+    _accounts = items;
+
+    notifyListeners();
+    // return items;
+  }
+
+  Future<Map<String, dynamic>> getAccountBalance(String account) async {
+    final client = Web3Client(rpcUrl, http.Client());
+
+    final address = EthereumAddress.fromHex(account);
+
+    var balance = await client.getBalance(address);
+
+    try {
+      var url = Uri.parse(exchangeAPI);
+      final response = await http.get(url);
+
+      if (json.decode(response.body) == null) {
+        return {"rupee": 0, "ether": 0.0};
+      }
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      print(extractedData);
+      rupee = extractedData['ethereum']!['inr'];
+
+      return {
+        "rupee": (rupee * balance.getValueInUnit(EtherUnit.ether)).floor(),
+        "ether": balance.getValueInUnit(EtherUnit.ether)
+      };
+    } catch (e) {
+      return {"rupee": 0, "ether": 0.0};
+    }
+  }
+
+  List<Account> get storedAccounts {
+    return [..._accounts];
+  }
+
+  Future<Map<String, dynamic>> decryptPrivatekey(
+      String address, String pin) async {
+    var accounts = await Hive.openBox<Account>('accounts');
+    var acc = accounts.get(address);
+    final hashingAlgo = Sha256();
+    final hash = await hashingAlgo.hash(utf8.encode(pin));
+    var pin2 = bytesToHex(hash.bytes);
+    EncryptionLib enc = EncryptionLib();
+    var decryptedKey = enc.decryptAESCryptoJS(acc!.privateKey, pin2);
+    // print(decryptedKey);
+    if (decryptedKey == "lol") {
+      return {"status": "fail"};
+    } else {
+      return {"status": "pass", "key": decryptedKey};
+    }
   }
 }
 
