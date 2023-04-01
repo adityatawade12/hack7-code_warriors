@@ -27,19 +27,18 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness:
-          !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+      statusBarBrightness: !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MultiProvider(
-      // providers: [
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => Web3Provider())
       //   ChangeNotifierProvider(create: (ctx) => Web3Api()),
       //   ChangeNotifierProvider(create: (ctx) => AuthService()),
       //   ChangeNotifierProvider(create: (ctx) => DbService())
-      // ],
-      providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
+      ],
       child: MaterialApp(
         title: 'App Name',
         debugShowCheckedModeBanner: false,
@@ -56,27 +55,12 @@ class MyApp extends StatelessWidget {
           PrimaryAccountScreen.routename: (ctx) => const PrimaryAccountScreen(),
           HomeScreen.routename: (ctx) => const HomeScreen()
         },
-
-    // return MultiProvider(
-    //     providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
-    //     child: MaterialApp(
-    //       title: 'Flutter Demo',
-    //       debugShowCheckedModeBanner: false,
-    //       theme: ThemeData(
-    //         primarySwatch: Colors.blue,
-    //       ),
-    //       initialRoute: SplashScreen.routename,
-    //       routes: {
-    //         LoginScreen.routename: (ctx) => const LoginScreen(),
-    //         SignUpScreen.routename: (ctx) => SignUpScreen(),
-    //         SplashScreen.routename: (ctx) => SplashScreen(),
-    //         HomeScreen.routename: (ctx) => const HomeScreen()
-    //       },
       )
     );
   }
 }
 
+/* 
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 
@@ -87,4 +71,4 @@ class HexColor extends Color {
     }
     return int.parse(hexColor, radix: 16);
   }
-}
+} */

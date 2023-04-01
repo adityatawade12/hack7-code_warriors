@@ -204,7 +204,8 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
                                   Icons.arrow_back,
                                   color: AppTheme.nearlyWhite,
                                   size: 30,
-                                )),
+                                )
+                            ),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
