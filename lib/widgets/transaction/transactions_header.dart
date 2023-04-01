@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hack7/screens/accounts/add_accounts_screen.dart';
+import 'package:hack7/screens/payment/request_pay_create.dart';
 import 'package:hack7/themes/apptheme.dart';
 
-class AccountsHeader extends StatelessWidget {
-  final String titleTxt;
-  final String subTxt;
+
+class TransactionsHeader extends StatelessWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final String address;
   final onGoBack;
 
-  const AccountsHeader(
+  const TransactionsHeader(
       {Key? key,
-      this.titleTxt = "",
-      this.subTxt = "",
       this.animationController,
       this.animation,
-      required this.onGoBack})
+      required this.onGoBack,
+      required this.address})
       : super(key: key);
 
   @override
@@ -29,17 +28,17 @@ class AccountsHeader extends StatelessWidget {
             transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - animation!.value), 0.0),
             child: Padding(
-              padding: const EdgeInsets.only(left: 24, right: 24),
+              padding: const EdgeInsets.only(left: 24, right: 24, top: 10),
               child: Row(
                 children: <Widget>[
-                  Expanded(
+                  const Expanded(
                     child: Text(
-                      titleTxt,
+                      "Transactions:",
                       textAlign: TextAlign.left,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: AppTheme.fontName,
                         fontWeight: FontWeight.w500,
-                        fontSize: 18,
+                        fontSize: 20,
                         letterSpacing: 0.5,
                         color: AppTheme.lightText,
                       ),
@@ -50,18 +49,20 @@ class AccountsHeader extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                     onTap: () {
                       animationController!.reverse().then((value) {
-                        Navigator.pushNamed(context, AddAccountScreen.routename)
+                        Navigator.pushNamed(
+                                context, CreatePayRequestScreen.routename,
+                                arguments: address)
                             .then(onGoBack);
                       });
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Row(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text(
-                            subTxt,
+                            "Request Payment",
                             textAlign: TextAlign.left,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: AppTheme.fontName,
                               fontWeight: FontWeight.normal,
                               fontSize: 16,
@@ -69,7 +70,7 @@ class AccountsHeader extends StatelessWidget {
                               color: AppTheme.mainBlue,
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 38,
                             width: 26,
                             child: Icon(
@@ -90,9 +91,4 @@ class AccountsHeader extends StatelessWidget {
       },
     );
   }
-
-  // FutureOr onGoBack1(dynamic value) {
-  //   animationController!.forward();
-  //   // setState(() {});
-  // }
 }

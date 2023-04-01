@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hack7/screens/account/AddAccountsScreen.dart';
+import 'package:hack7/screens/accounts/add_accounts_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 
 class AddAccountWidget extends StatelessWidget {

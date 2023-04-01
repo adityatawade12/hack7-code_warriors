@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/screens/auth/singup_screen.dart';
 import 'package:hack7/screens/home.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/app_text_field.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routename = '/login';
@@ -23,10 +25,12 @@ class _LoginScreenState extends State<LoginScreen> {
   _backgroundGradient() {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color.fromRGBO(68, 72, 214, 1), AppTheme.nearlyBlue])),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color.fromRGBO(68, 72, 214, 1), AppTheme.nearlyBlue]
+        )
+      ),
     );
   }
 
@@ -39,11 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
         const Padding(
           padding: EdgeInsets.all(10),
           child: Text("Invalid Credentials!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold)),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold
+            )
+          ),
         )
       ];
     } else {
@@ -53,6 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var auth = Provider.of<AuthService>(context);
+    
     final mq = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
 
     return GestureDetector(
@@ -132,8 +140,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             child: const Text("Login"),
-                            onPressed: () {
-                              Navigator.pushNamed(context, HomeScreen.routename);
+                            onPressed: () async {
+                              var status = await auth.signIn(
+                                emailController.text,
+                                passController.text
+                              );
+                              // print("noauth");
+                              if (status != null) {
+                                Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+                              } else {
+                                setState(() {
+                                  emailController.text = "";
+                                  passController.text = "";
+                                  invalidCreds = true;
+                                });
+                              }
                             },
                           ),
                         ),

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hack7/screens/account/AddAccountsScreen.dart';
+import 'package:hack7/screens/accounts/add_accounts_screen.dart';
 
 import 'auth/login_screen.dart';
 
