@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hack7/screens/auth/singup_screen.dart';
 import 'package:hack7/screens/home.dart';
 import 'package:hack7/themes/apptheme.dart';
-import 'package:hack7/widgets/ApptextField.dart';
+import 'package:hack7/widgets/app_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routename = '/login';
@@ -151,9 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onTap: () {
-                                  print("Sign up");
-                                  Navigator.pushNamed(
-                                      context, LoginScreen.routename);
+                                  if (kDebugMode) {
+                                    print("Sign up");
+                                  }
+                                  Navigator.pushNamed(context, SignUpScreen.routename);
                                 },
                               )
                             ])

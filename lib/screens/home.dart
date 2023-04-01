@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hack7/models/tab_icon_data.dart';
 import 'package:hack7/screens/accounts/account_screen.dart';
+import 'package:hack7/screens/profile/profile_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/bottombar.dart';
 
@@ -119,6 +120,10 @@ class _AppHomeScreenState extends State<HomeScreen>
                 if (!mounted) {
                   return;
                 }
+                setState(() {
+                  tabBody =
+                      ProfileScreen(animationController: animationController);
+                });
               });
             }
           },
