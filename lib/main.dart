@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hack7/firebase_options.dart';
 import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/fbdbprovider.dart';
 import 'package:hack7/screens/account/AddAccountsScreen.dart';
@@ -20,6 +22,9 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.initFlutter(directory.path);
   runApp(const MyApp());
@@ -35,7 +40,8 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+      statusBarBrightness:
+          !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -65,8 +71,6 @@ class MyApp extends StatelessWidget {
             HomeScreen.routename: (ctx) => const HomeScreen(),
             AddAccountScreen.routename: (ctx) => const AddAccountScreen()
           },
-
-          
         ));
   }
 }

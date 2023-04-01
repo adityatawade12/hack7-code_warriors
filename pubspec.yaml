@@ -36,6 +36,8 @@ dependencies:
   rxdart: ^0.27.7
   pushy_flutter: 2.0.11
   awesome_notifications: ^0.7.4+1
+  solana_web3: ^0.0.8
+  
 
 dev_dependencies:
   flutter_test:
