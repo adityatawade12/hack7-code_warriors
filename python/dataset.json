@@ -1,0 +1,30 @@
+
+{
+    "transactions":
+    [
+        { 
+            "category": "groceries",
+            "amount": "100",
+            "type_of_currency": "solana",
+            "date": "October" 
+        },
+        { 
+            "category": "entertainment",
+            "amount": "200",
+            "type_of_currency": "ethereum",
+            "date": "October" 
+        },
+        { 
+            "category": "groceries",
+            "amount": "300",
+            "type_of_currency": "kjh",
+            "date": "October" 
+        },
+        { 
+            "category": "groceries",
+            "amount": "300",
+            "type_of_currency": "kjh",
+            "date": "February" 
+        }
+    ]
+}

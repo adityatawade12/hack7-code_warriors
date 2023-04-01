@@ -1,0 +1,280 @@
+{
+    "month":[
+    {
+        "name":"January",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"February",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"March",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"April",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"May",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"June",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"July",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"August",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"September",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"October",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"November",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    },
+    {
+        "name":"December",
+        "income":"0",
+        "expenditure":"0",
+        "ethereum":"0",
+        "solana":"0",
+        "kjh":"0",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "0"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "0"
+            },
+            {
+                "name" : "travel",
+                "amount" : "0"
+            }
+        ]
+    }
+]
+}
