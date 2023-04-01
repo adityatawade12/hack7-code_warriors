@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/authprovider.dart';
+import 'package:hack7/providers/fbdbprovider.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/app_text_field.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key? key}) : super(key: key);
@@ -82,7 +85,7 @@ class _EditProfileState extends State<EditProfile>
     );
   }
 
-  /* Future<dynamic> checkVPA(vpa) async {
+  Future<dynamic> checkVPA(vpa) async {
     _validationMsg = null;
     setState(() {});
 
@@ -100,18 +103,18 @@ class _EditProfileState extends State<EditProfile>
     //it's just faking delay, make your won async validation here
     // await Future.delayed(Duration(seconds: 2));
     var availableVPA =
-        await Provider.of<DbService>(context, listen: false).checkVPA(vpa);
+        await Provider.of<DbProvider>(context, listen: false).checkVPA(vpa);
     _isChecking = false;
     print(availableVPA);
     if (availableVPA == "0") {
-      _validationMsg = "${vpa} is taken";
+      _validationMsg = "$vpa is taken";
     }
 
     // if (vpa != 'harun') ;
 
     setState(() {});
   }
- */
+
   
   void addAllListData() {
     const int count = 10;
@@ -179,7 +182,8 @@ class _EditProfileState extends State<EditProfile>
   }
 
   Widget getMainListViewUI() {
-    // var db = Provider.of<DbService>(context, listen: false);
+    var db = Provider.of<DbProvider>(context, listen: false);
+
     // return FutureBuilder(
     //   future: getData(),
     //   builder: (BuildContext context, snapshot) {
@@ -305,26 +309,25 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final vpaController = TextEditingController();
-  // Timer? _timerVpa = Timer(const Duration(milliseconds: 0), () {});
+  Timer? _timerVpa = Timer(const Duration(milliseconds: 0), () {});
   bool vpaExist = false;
   String ogVpa = "";
 
   @override
   void initState() {
-/* 
+
     var auth = Provider.of<AuthService>(context, listen: false);
     ogVpa = auth.loggedInUser.vpa;
     nameController.text = auth.loggedInUser.name;
     vpaController.text = auth.loggedInUser.vpa;
 
     vpaController.addListener(() async {
-      // ignore: unnecessary_null_comparison
       if (vpaController.text != ogVpa) {
         if (_timerVpa!.isActive) {
           _timerVpa?.cancel();
         }
         _timerVpa = Timer(const Duration(milliseconds: 500), (() async {
-          var vpaex = await Provider.of<DbService>(context, listen: false)
+          var vpaex = await Provider.of<DbProvider>(context, listen: false)
               .checkVPAValidity(vpaController.text);
           print("Changing vap status" + vpaex.toString() + vpaController.text);
           setState(() {
@@ -341,14 +344,15 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
         }));
       }
     });
- */
+//  */
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Web3EthProvider web3 = Web3EthProvider();
-    // var auth = Provider.of<AuthService>(context);
+    var auth = Provider.of<AuthService>(context);
+
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -431,10 +435,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               )
                             ),
                             onPressed: () async {
-                              /* if (nameController.text.length > 0 &&
-                                  !vpaExist) {
-                                var stat =
-                                    await auth.updateAccountInfo(
+                              if (nameController.text.isNotEmpty && !vpaExist) {
+                                var stat = await auth.updateAccountInfo(
                                         nameController.text,
                                         vpaController.text);
                                 print("edit");
@@ -469,7 +471,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   print("after");
                                   setState(() {});
                                 }
-                              } */
+                              }
                             },
                             child: const Padding(
                               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),

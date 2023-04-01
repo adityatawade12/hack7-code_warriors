@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hack7/providers/authprovider.dart';
+import 'package:hack7/providers/fbdbprovider.dart';
 import 'package:hack7/screens/account/AddAccountsScreen.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
@@ -40,8 +42,8 @@ class MyApp extends StatelessWidget {
     ));
     return MultiProvider(
         providers: [
-        //   ChangeNotifierProvider(create: (ctx) => AuthService()),
-        //   ChangeNotifierProvider(create: (ctx) => DbService())
+          ChangeNotifierProvider(create: (ctx) => AuthService()),
+          ChangeNotifierProvider(create: (ctx) => DbProvider()),
           ChangeNotifierProvider(create: (ctx) => Web3EthProvider()),
           ChangeNotifierProvider(create: (ctx) => Web3SolProvider())
         ],
