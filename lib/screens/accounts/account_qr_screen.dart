@@ -1,41 +1,51 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/fbdbprovider.dart';
 import 'package:hack7/themes/apptheme.dart';
-import 'package:hack7/themes/homeapptheme.dart';
-import 'package:hack7/widgets/AddAccountWidget.dart';
+import 'package:hack7/widgets/address_qr_box.dart';
+import 'package:provider/provider.dart';
 
-class AddAccountScreen extends StatefulWidget {
-  static const routename = '/addAccount';
 
-  const AddAccountScreen({
+class AccountQrScreen extends StatefulWidget {
+  static const routename = "/pnt";
+  final String address;
+  final String name;
+  const AccountQrScreen({
     Key? key,
+    required this.address,
+    required this.name,
   }) : super(key: key);
 
   @override
-  _AddAccountScreenState createState() => _AddAccountScreenState();
+  _AccountQrScreenState createState() => _AccountQrScreenState();
 }
 
-class _AddAccountScreenState extends State<AddAccountScreen>
+class _AccountQrScreenState extends State<AccountQrScreen>
     with TickerProviderStateMixin {
   Animation<double>? topBarAnimation;
   AnimationController? animationController;
   List<Widget> listViews = <Widget>[];
-
+  List<Widget> listViewsEmpty = <Widget>[];
+  List<Widget> listViewsFilled = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
   @override
   void initState() {
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
-
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    // final args =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final args = {"address": widget.address, "name": widget.name};
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: animationController!,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
 
-    addAllListData();
+    // await ve3.fetchStoredAccounts();
+    // print(ve3.storedAccounts);
+    addAllListData(args);
 
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
@@ -62,20 +72,20 @@ class _AddAccountScreenState extends State<AddAccountScreen>
     super.initState();
   }
 
-  void addAllListData() {
+  void addAllListData(args) {
     const int count = 10;
-    listViews.add(SizedBox(
+    listViews.add(const SizedBox(
       height: 100,
     ));
 
     listViews.add(
-      AddAccountWidget(
+      AddressQrBox(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: animationController!,
             curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+                const Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: animationController!,
-        onGoBack: onGoBack,
+        address: args['address'],
       ),
     );
   }
@@ -91,34 +101,48 @@ class _AddAccountScreenState extends State<AddAccountScreen>
   }
 
   @override
-  dispose() {
-    animationController!.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print("loading page");
-    return
-        // Container(
-        // child:
-        Scaffold(
-      // backgroundColor: AppTheme.mainBlue,
-      backgroundColor: HomeAppTheme.background,
-      body: Stack(
-        children: <Widget>[
-          getMainListViewUI(),
-          getAppBarUI(),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
-          )
-        ],
+    return Container(
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [
+            // HexColor('#6A88E5'),
+            AppTheme.nearlyBlue,
+            AppTheme.mainBlue,
+            AppTheme.nearlyBlue
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        ),
+        child: Scaffold(
+          // backgroundColor: AppTheme.mainBlue,
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: <Widget>[
+              getMainListViewUI(),
+              getAppBarUI(),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
+              )
+            ],
+          ),
+        ),
       ),
-      // ),
     );
   }
 
   Widget getMainListViewUI() {
+    var db = Provider.of<DbProvider>(context, listen: false);
+    // return FutureBuilder(
+    //   future: getData(),
+    //   builder: (BuildContext context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return Center(
+    //         child: CircularProgressIndicator(
+    //           color: AppTheme.mainBlue,
+    //         ),
+    //       );
+    //     } else {
+    //       print(snapshot.data);
+
     return ListView.builder(
       controller: scrollController,
       padding: EdgeInsets.only(
@@ -130,10 +154,23 @@ class _AddAccountScreenState extends State<AddAccountScreen>
       itemCount: listViews.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (BuildContext context, int index) {
+        // if (listViews.length > 5) {
+        //   if (index == 4) {
+        //     return SizedBox();
+        //   }
+        //   widget.animationController?.forward();
+        //   return listViews[index];
+        // } else {
+        //   widget.animationController?.forward();
+        //   return listViews[index];
+        // }
         animationController?.forward();
         return listViews[index];
       },
     );
+    //     }
+    //   },
+    // );
   }
 
   Widget getAppBarUI() {
@@ -149,13 +186,13 @@ class _AddAccountScreenState extends State<AddAccountScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: HomeAppTheme.background,
+                    color: AppTheme.white,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(0.0),
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: HomeAppTheme.grey
+                          color: AppTheme.grey
                               .withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
@@ -181,22 +218,22 @@ class _AddAccountScreenState extends State<AddAccountScreen>
                                     Navigator.of(context).pop();
                                   });
                                 }),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_back,
-                                  size: 25,
+                                  size: 30,
                                 )),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Add Account',
+                                  'AccountQR',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontFamily: HomeAppTheme.fontName,
+                                    fontFamily: AppTheme.fontName,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 20 + 6 - 6 * topBarOpacity,
+                                    fontSize: 22 + 6 - 6 * topBarOpacity,
                                     letterSpacing: 1.2,
-                                    color: HomeAppTheme.darkerText,
+                                    color: AppTheme.darkerText,
                                   ),
                                 ),
                               ),

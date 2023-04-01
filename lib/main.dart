@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:hack7/firebase_options.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/fbdbprovider.dart';
-import 'package:hack7/screens/account/AddAccountsScreen.dart';
+import 'package:hack7/screens/accounts/add_accounts_screen.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
 import 'package:hack7/screens/splash_screen.dart';
@@ -20,6 +22,9 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.initFlutter(directory.path);
   runApp(const MyApp());
@@ -40,6 +45,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (ctx) => AuthService()),
@@ -71,7 +77,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/* 
+ 
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 
@@ -82,4 +88,4 @@ class HexColor extends Color {
     }
     return int.parse(hexColor, radix: 16);
   }
-} */
+}
