@@ -23,7 +23,7 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
   var _switchState = false;
   @override
   Widget build(BuildContext context) {
-    // var web3 = Provider.of<Web3Api>(context, listen: false);
+    // var web3 = Provider.of<Web3EthProvider>(context, listen: false);
 
     return AnimatedBuilder(
       animation: widget.animationController!,
@@ -49,7 +49,7 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                     ),
                   ),
                   child: FutureBuilder(
-                      // future: Provider.of<Web3Api>(context, listen: false)
+                      // future: Provider.of<Web3EthProvider>(context, listen: false)
                       //     .getAccountBalance(widget.account),
                       builder: (ctx, dataSnapshot) {
                         if (dataSnapshot.connectionState ==
@@ -66,7 +66,7 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                             );
                           }
                           var data = dataSnapshot.data as Map<String, dynamic>;
-                          return Consumer/* <Web3Api> */(
+                          return Consumer/* <Web3EthProvider> */(
                               builder: (ctx, crypto, child) => Column(
                                     children: [
                                       Row(

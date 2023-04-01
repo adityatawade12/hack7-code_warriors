@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
+import 'package:provider/provider.dart';
+import 'package:pinput/pinput.dart';
 
 class KeyDialog extends StatefulWidget {
   final String address;
@@ -30,7 +33,7 @@ class _KeyDialogState extends State<KeyDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // var web3 = Provider.of<Web3Api>(context, listen: false);
+    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
 
     return !(widget.showKeyBox)
         ? !(widget.showpin)
@@ -82,7 +85,7 @@ class _KeyDialogState extends State<KeyDialog> {
                         flex: 1,
                       ),
                       // Pinput(
-                     /*  Pinput(
+                      Pinput(
                         focusNode: focusNode,
                         onCompleted: (pin) async {
                           print("First");
@@ -108,7 +111,7 @@ class _KeyDialogState extends State<KeyDialog> {
                         showCursor: true,
                         errorText: "Wrong pin",
                       ),
-                      // PinInput(widget.address), */
+                      // PinInput(widget.address),
                       const Spacer(
                         flex: 2,
                       ),

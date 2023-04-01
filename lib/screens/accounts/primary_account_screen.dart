@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_radio_tile.dart';
 import 'package:provider/provider.dart';
@@ -121,7 +122,7 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
   }
 
   Widget getMainListViewUI() {
-    // var web3 = Provider.of<Web3Api>(context, listen: false);
+    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
 
     return ListView.builder(
       controller: scrollController,
@@ -131,15 +132,13 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
             32,
         bottom: 62 + MediaQuery.of(context).padding.bottom,
       ),
-      // itemCount: web3.storedAccounts.length,
+      itemCount: web3.storedAccounts.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (BuildContext ctx, int index) {
         animationController?.forward();
         return AccountRadioTile(
-          // accountName: web3.storedAccounts[index].name,
-          // accountAddress: web3.storedAccounts[index].accountAddress,
-          accountName: "name",
-          accountAddress: "accountAddress",
+          accountName: web3.storedAccounts[index].name,
+          accountAddress: web3.storedAccounts[index].accountAddress,
           groupval: selectedAcc,
           func: setPrimaryAcc,
           animation: Tween<double>(begin: 0.0, end: 1.0).animate(

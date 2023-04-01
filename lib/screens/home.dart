@@ -7,16 +7,15 @@ import 'package:hack7/screens/profile/profile_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/bottombar.dart';
 
-
 class HomeScreen extends StatefulWidget {
   static const routename = "/home";
 
   const HomeScreen({super.key});
   @override
-  _FitnessAppHomeScreenState createState() => _FitnessAppHomeScreenState();
+  _AppHomeScreenState createState() => _AppHomeScreenState();
 }
 
-class _FitnessAppHomeScreenState extends State<HomeScreen>
+class _AppHomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin {
   AnimationController? animationController;
 
@@ -28,7 +27,6 @@ class _FitnessAppHomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    
     for (var tab in tabIconsList) {
       tab.isSelected = false;
     }
@@ -114,7 +112,7 @@ class _FitnessAppHomeScreenState extends State<HomeScreen>
                 }
                 setState(() {
                   tabBody =
-                    AccountScreen(animationController: animationController);
+                      AccountScreen(animationController: animationController);
                 });
               });
             } else if (index == 1) {

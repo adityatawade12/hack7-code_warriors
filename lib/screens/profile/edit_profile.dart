@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/app_text_field.dart';
 
@@ -346,7 +347,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Web3Api web3 = Web3Api();
+    Web3EthProvider web3 = Web3EthProvider();
     // var auth = Provider.of<AuthService>(context);
     return AnimatedBuilder(
       animation: widget.animationController!,

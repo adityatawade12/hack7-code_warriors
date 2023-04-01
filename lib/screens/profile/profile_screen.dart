@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/profile/profile_page_tile.dart';
 import 'package:hack7/widgets/profile/profile_qr.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, this.animationController}) : super(key: key);
@@ -243,12 +245,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   // await auth.signOut();
                                   Navigator.of(context).pushReplacementNamed(
                                       LoginScreen.routename);
-                                  // await Provider.of<Web3Api>(context,
-                                  //         listen: false)
-                                  //     .createPaymentRequest(
-                                  //         10,
-                                  //         auth.loggedInUser.primaryAccount,
-                                  //         "recver@cryptopay");
+                                  /* await Provider.of<Web3EthProvider>(context,
+                                          listen: false)
+                                      .createPaymentRequest(
+                                          10,
+                                          auth.loggedInUser.primaryAccount,
+                                          "recver@cryptopay"); */
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,

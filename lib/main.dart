@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hack7/screens/account/AddAccountsScreen.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
 import 'package:hack7/screens/splash_screen.dart';
@@ -10,10 +11,15 @@ import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/screens/auth/singup_screen.dart';
 import 'package:hack7/screens/home.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory directory = await path_provider.getApplicationDocumentsDirectory();
+  Hive.initFlutter(directory.path);
   runApp(const MyApp());
 }
 
@@ -33,30 +39,47 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (ctx) => Web3Provider())
-      //   ChangeNotifierProvider(create: (ctx) => Web3Api()),
-      //   ChangeNotifierProvider(create: (ctx) => AuthService()),
-      //   ChangeNotifierProvider(create: (ctx) => DbService())
-      ],
-      child: MaterialApp(
-        title: 'App Name',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: AppTheme.textTheme,
-        ),
-        initialRoute: SplashScreen.routename,
-        routes: {
-          LoginScreen.routename: (ctx) => const LoginScreen(),
-          SignUpScreen.routename: (ctx) => SignUpScreen(),
-          SplashScreen.routename: (ctx) => SplashScreen(),
-          EditProfile.routename: (ctx) => EditProfile(),
-          PrimaryAccountScreen.routename: (ctx) => const PrimaryAccountScreen(),
-          HomeScreen.routename: (ctx) => const HomeScreen()
-        },
-      )
-    );
+        providers: [
+        //   ChangeNotifierProvider(create: (ctx) => AuthService()),
+        //   ChangeNotifierProvider(create: (ctx) => DbService())
+          ChangeNotifierProvider(create: (ctx) => Web3EthProvider()),
+          ChangeNotifierProvider(create: (ctx) => Web3SolProvider())
+        ],
+        child: MaterialApp(
+          title: 'App Name',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            textTheme: AppTheme.textTheme,
+          ),
+          initialRoute: SplashScreen.routename,
+          routes: {
+            LoginScreen.routename: (ctx) => const LoginScreen(),
+            SignUpScreen.routename: (ctx) => SignUpScreen(),
+            SplashScreen.routename: (ctx) => SplashScreen(),
+            EditProfile.routename: (ctx) => EditProfile(),
+            PrimaryAccountScreen.routename: (ctx) =>
+                const PrimaryAccountScreen(),
+            HomeScreen.routename: (ctx) => const HomeScreen(),
+            AddAccountScreen.routename: (ctx) => const AddAccountScreen()
+          },
+
+          // return MultiProvider(
+          //     providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
+          //     child: MaterialApp(
+          //       title: 'Flutter Demo',
+          //       debugShowCheckedModeBanner: false,
+          //       theme: ThemeData(
+          //         primarySwatch: Colors.blue,
+          //       ),
+          //       initialRoute: SplashScreen.routename,
+          //       routes: {
+          //         LoginScreen.routename: (ctx) => const LoginScreen(),
+          //         SignUpScreen.routename: (ctx) => SignUpScreen(),
+          //         SplashScreen.routename: (ctx) => SplashScreen(),
+          //         HomeScreen.routename: (ctx) => const HomeScreen()
+          //       },
+        ));
   }
 }
 

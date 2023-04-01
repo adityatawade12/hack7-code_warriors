@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
@@ -80,15 +81,14 @@ class _ExchangeBoxState extends State<ExchangeBox> {
                       Container(
                           height: 90,
                           child: FutureBuilder(
-                            // future: Provider.of<Web3Api>(context, listen: false)
-                            //     .getEtherExchange(),
+                            future: Provider.of<Web3EthProvider>(context, listen: false).getEtherExchange(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return Center(
-                                  child: Container(
+                                return const Center(
+                                  child: SizedBox(
                                       width: 35,
-                                      child: const CircularProgressIndicator(
+                                      child: CircularProgressIndicator(
                                         color: AppTheme.nearlyWhite,
                                       )),
                                 );

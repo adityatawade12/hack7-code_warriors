@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
-
 class AccountTileList extends StatefulWidget {
   const AccountTileList(
       {Key? key,
@@ -22,7 +21,7 @@ class AccountTileList extends StatefulWidget {
 class _AccountTileListState extends State<AccountTileList> {
   @override
   Widget build(BuildContext context) {
-    // var web3 = Provider.of<Web3Api>(context, listen: false);
+    // var web3 = Provider.of<Web3EthProvider>(context, listen: false);
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -49,7 +48,7 @@ class _AccountTileListState extends State<AccountTileList> {
                           ),
                         );
                       } else {
-                        if (/* web3.storedAccounts.length == 0 */true) {
+                        if (/* web3.storedAccounts.length == 0 */ true) {
                           return Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, top: 10, bottom: 45),
@@ -65,8 +64,7 @@ class _AccountTileListState extends State<AccountTileList> {
                                     topRight: Radius.circular(68.0)),
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                      color:
-                                          AppTheme.grey.withOpacity(0.2),
+                                      color: AppTheme.grey.withOpacity(0.2),
                                       offset: const Offset(1.1, 1.1),
                                       blurRadius: 10.0),
                                 ],
@@ -75,7 +73,7 @@ class _AccountTileListState extends State<AccountTileList> {
                                 padding: const EdgeInsets.only(
                                     top: 16, left: 16, right: 16, bottom: 16),
                                 // child: NewWidget(),
-                                child: Container(
+                                child: SizedBox(
                                   height: 130,
                                   width: double.infinity,
                                   child: Column(
@@ -94,8 +92,7 @@ class _AccountTileListState extends State<AccountTileList> {
                                           "No Accounts yet!",
                                           style: TextStyle(
                                             color: AppTheme.mainBlue,
-                                            fontFamily:
-                                                AppTheme.fontName,
+                                            fontFamily: AppTheme.fontName,
                                             fontSize: 18,
                                           ),
                                         )
@@ -105,54 +102,6 @@ class _AccountTileListState extends State<AccountTileList> {
                             ),
                           );
                         }
-                        // print(snapshot.data);
-                        // if (!snapshot.hasData) {
-                        //   print(snapshot.data);
-                        //   return const SizedBox();
-                        // } else {
-                        // var data = snapshot.data as List;
-                        /* return ListView.builder(
-                          // controller: scrollController,
-                          padding: EdgeInsets.only(
-                            // top: AppBar().preferredSize.height +
-                            //     MediaQuery.of(context).padding.top +
-                            //     24,
-                            bottom: 110 + MediaQuery.of(context).padding.bottom,
-                          ),
-                          // itemCount: web3.storedAccounts.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (ctx, int index) {
-                            widget.animationController?.forward();
-                            return InkWell(
-                              onTap: (() {
-                                widget.animationController!
-                                    .reverse()
-                                    .then((value) {
-                                  print("lol");
-                                //   Navigator.of(context)
-                                //       .push(MaterialPageRoute(
-                                //           builder: (ctx) =>
-                                //               PassBookAndTransactionScreen(
-                                //                 address: web3
-                                //                     .storedAccounts[index]
-                                //                     .accountAddress,
-                                //                 name: web3
-                                //                     .storedAccounts[index].name,
-                                //               )))
-                                //       .then(widget.onGoBack);
-                                // });
-                              }),
-                              child: AccountTile(
-                                accountName: web3.storedAccounts[index].name,
-                                accountAddress:
-                                    web3.storedAccounts[index].accountAddress,
-                                animation: widget.animation,
-                                animationController: widget.animationController,
-                              ),
-                            );
-                          },
-                        ); */
-                        // }
                       }
                     },
                   ),
@@ -163,48 +112,3 @@ class _AccountTileListState extends State<AccountTileList> {
     );
   }
 }
-
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   var web3 = Provider.of<Web3Api>(context, listen: false);
-  //   return FutureBuilder(
-  //     future: web3.fetchStoredAccounts(),
-  //     builder: (BuildContext context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return Center(
-  //           child: CircularProgressIndicator(
-  //             color: AppTheme.mainBlue,
-  //           ),
-  //         );
-  //       } else {
-  //         if (!snapshot.hasData) {
-  //           return const SizedBox();
-  //         } else {
-  //           var data = snapshot.data as List;
-  //           return ListView.builder(
-  //             // controller: scrollController,
-  //             padding: EdgeInsets.only(
-  //               top: AppBar().preferredSize.height +
-  //                   MediaQuery.of(context).padding.top +
-  //                   24,
-  //               bottom: 62 + MediaQuery.of(context).padding.bottom,
-  //             ),
-  //             itemCount: data.length,
-  //             scrollDirection: Axis.vertical,
-  //             itemBuilder: (BuildContext context, int index) {
-  //               widget.animationController?.forward();
-  //               return AccountTile(
-  //                 accountName: web3.storedAccounts[index].name,
-  //                 accountAddress: web3.storedAccounts[index].accountAddress,
-  //                 animation: widget.animation,
-  //                 animationController: widget.animationController,
-  //               );
-  //             },
-  //           );
-  //         }
-  //       }
-  //     },
-  //   );
-  //   ;
-  // }

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_header.dart';
 import 'package:hack7/widgets/account/account_tile_list.dart';
@@ -22,17 +22,17 @@ class _AccountScreenState extends State<AccountScreen>
   Animation<double>? topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
-  List<Widget> listViewsEmpty = <Widget>[];
-  List<Widget> listViewsFilled = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+      CurvedAnimation(
+          parent: widget.animationController!,
+          curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)
+      )
+    );
 
     // await ve3.fetchStoredAccounts();
     // print(ve3.storedAccounts);
@@ -141,7 +141,7 @@ class _AccountScreenState extends State<AccountScreen>
   }
 
   Widget getMainListViewUI() {
-    // var web3 = Provider.of<Web3Api>(context, listen: false);
+    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
     return FutureBuilder(
       future: getData(),
       builder: (BuildContext context, snapshot) {
@@ -199,8 +199,7 @@ class _AccountScreenState extends State<AccountScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -253,19 +252,19 @@ class _AccountScreenState extends State<AccountScreen>
                                         //   AssetImage('assets/images/notif.png'),
                                         //   size: 35,
                                         // )
-                                        Icon(
+                                        const Icon(
                                       Icons.request_quote_outlined,
                                       size: 35,
                                       // color: ,
                                     )),
-                              /*   FutureBuilder(
-                                    future: Provider.of<Web3Api>(context,
+                                  FutureBuilder(
+                                    /* future: Provider.of<Web3EthProvider>(context,
                                             listen: false)
                                         .getPaymentRequests(
                                             Provider.of<AuthService>(context,
                                                     listen: false)
                                                 .loggedInUser
-                                                .vpa),
+                                                .vpa), */
                                     builder: ((ct, snapshot) {
                                       if (snapshot.hasData) {
                                         return Positioned(
@@ -298,8 +297,9 @@ class _AccountScreenState extends State<AccountScreen>
                                         height: 0,
                                         width: 0,
                                       );
-                                    }))
-                               */
+                                    }
+                                  )
+                                )
                               ],
                             ),
                           ],
