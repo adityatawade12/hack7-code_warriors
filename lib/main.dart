@@ -68,21 +68,7 @@ class MyApp extends StatelessWidget {
             AddAccountScreen.routename: (ctx) => AddAccountScreen()
           },
 
-          // return MultiProvider(
-          //     providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
-          //     child: MaterialApp(
-          //       title: 'Flutter Demo',
-          //       debugShowCheckedModeBanner: false,
-          //       theme: ThemeData(
-          //         primarySwatch: Colors.blue,
-          //       ),
-          //       initialRoute: SplashScreen.routename,
-          //       routes: {
-          //         LoginScreen.routename: (ctx) => const LoginScreen(),
-          //         SignUpScreen.routename: (ctx) => SignUpScreen(),
-          //         SplashScreen.routename: (ctx) => SplashScreen(),
-          //         HomeScreen.routename: (ctx) => const HomeScreen()
-          //       },
+          
         ));
   }
 }
