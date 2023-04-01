@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hack7/auth/LoginScreen.dart';
+import 'package:hack7/screens/auth/LoginScreen.dart';
 import 'package:hack7/providers/web3provider.dart';
+import 'package:hack7/screens/home.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -20,8 +21,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          initialRoute: LoginScreen.routename,
-          routes: {LoginScreen.routename: (ctx) => LoginScreen()},
+          initialRoute: HomeScreen.routename,
+          routes: {
+            LoginScreen.routename: (ctx) => LoginScreen(),
+            HomeScreen.routename: (ctx) => const HomeScreen(),
+          },
         ));
   }
 }
@@ -36,13 +40,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final int _counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          Navigator.pushNamed(context, HomeScreen.routename);
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
