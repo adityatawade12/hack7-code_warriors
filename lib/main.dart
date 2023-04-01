@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
         child: MaterialApp(
           title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
