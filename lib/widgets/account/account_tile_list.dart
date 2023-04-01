@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hack7/themes/apptheme.dart';
-import 'package:hack7/widgets/account_tile.dart';
 import 'package:provider/provider.dart';
 
 

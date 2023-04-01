@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hack7/screens/accounts/primary_account_screen.dart';
+import 'package:hack7/screens/profile/edit_profile.dart';
 import 'package:hack7/screens/splash_screen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/providers/web3provider.dart';
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
           LoginScreen.routename: (ctx) => const LoginScreen(),
           SignUpScreen.routename: (ctx) => SignUpScreen(),
           SplashScreen.routename: (ctx) => SplashScreen(),
+          EditProfile.routename: (ctx) => EditProfile(),
+          PrimaryAccountScreen.routename: (ctx) => const PrimaryAccountScreen(),
           HomeScreen.routename: (ctx) => const HomeScreen()
         },
 

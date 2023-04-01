@@ -4,11 +4,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hack7/themes/apptheme.dart';
-import 'package:hack7/widgets/account_header.dart';
-import 'package:hack7/widgets/account_tile_list.dart';
+import 'package:hack7/widgets/account/account_header.dart';
+import 'package:hack7/widgets/account/account_tile_list.dart';
 import 'package:hack7/widgets/exchange_box.dart';
 import 'package:hack7/widgets/title_view.dart';
-import 'package:provider/provider.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key, this.animationController}) : super(key: key);

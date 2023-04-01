@@ -33,14 +33,14 @@ class AccountTile extends StatelessWidget {
                   color: AppTheme.white,
                   // ignore: prefer_const_constructors
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(38.0)),
+                      topLeft: const Radius.circular(8.0),
+                      bottomLeft: const Radius.circular(8.0),
+                      bottomRight: const Radius.circular(8.0),
+                      topRight: const Radius.circular(38.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                         color: AppTheme.grey.withOpacity(0.2),
-                        offset: Offset(1.1, 1.1),
+                        offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
                 ),
@@ -60,14 +60,14 @@ class AccountTile extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
+                                children: <Widget> [
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         left: 4, bottom: 3),
                                     child: Text(
                                       accountName,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: AppTheme.fontName,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 20,

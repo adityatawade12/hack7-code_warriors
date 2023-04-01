@@ -1,8 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/screens/accounts/primary_account_screen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
+import 'package:hack7/screens/profile/edit_profile.dart';
 import 'package:hack7/themes/apptheme.dart';
+import 'package:hack7/widgets/profile/profile_page_tile.dart';
+import 'package:hack7/widgets/profile/profile_qr.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, this.animationController}) : super(key: key);
@@ -55,14 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   void addAllListData() {
-/* 
+// /* 
     const int count = 5;
     listViews.add(
       ProfileQrView(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: const Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -80,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           animation: Tween<double>(begin: 0.0, end: 1.0).animate(
               CurvedAnimation(
                   parent: widget.animationController!,
-                  curve: Interval((1 / count) * 3, 1.0,
+                  curve: const Interval((1 / count) * 3, 1.0,
                       curve: Curves.fastOutSlowIn))),
           animationController: widget.animationController!,
           imageIcon: Icons.manage_accounts_rounded,
@@ -104,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           animation: Tween<double>(begin: 0.0, end: 1.0).animate(
               CurvedAnimation(
                   parent: widget.animationController!,
-                  curve: Interval((1 / count) * 3, 1.0,
+                  curve: const Interval((1 / count) * 3, 1.0,
                       curve: Curves.fastOutSlowIn))),
           animationController: widget.animationController!,
           imageIcon: Icons.account_balance_rounded,
@@ -114,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
       ),
     );
- */  
+//  */  
   }
 
   Future<bool> getData() async {
