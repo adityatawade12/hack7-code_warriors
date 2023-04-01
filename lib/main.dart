@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hack7/screens/SplashScreen.dart';
+import 'package:flutter/services.dart';
+import 'package:hack7/screens/splash_screen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/screens/auth/singup_screen.dart';
 import 'package:hack7/screens/home.dart';
+import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,64 +21,66 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness:
+          !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          initialRoute: SplashScreen.routename,
-          routes: {
-            LoginScreen.routename: (ctx) => const LoginScreen(),
-            SignUpScreen.routename: (ctx) => SignUpScreen(),
-            SplashScreen.routename: (ctx) => SplashScreen(),
-            HomeScreen.routename: (ctx) => const HomeScreen()
-          },
-        ));
+      // providers: [
+      //   ChangeNotifierProvider(create: (ctx) => Web3Api()),
+      //   ChangeNotifierProvider(create: (ctx) => AuthService()),
+      //   ChangeNotifierProvider(create: (ctx) => DbService())
+      // ],
+      providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
+      child: MaterialApp(
+        title: 'App Name',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: AppTheme.textTheme,
+        ),
+        initialRoute: SplashScreen.routename,
+        routes: {
+          LoginScreen.routename: (ctx) => const LoginScreen(),
+          SignUpScreen.routename: (ctx) => SignUpScreen(),
+          SplashScreen.routename: (ctx) => SplashScreen(),
+          HomeScreen.routename: (ctx) => const HomeScreen()
+        },
+
+    // return MultiProvider(
+    //     providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
+    //     child: MaterialApp(
+    //       title: 'Flutter Demo',
+    //       debugShowCheckedModeBanner: false,
+    //       theme: ThemeData(
+    //         primarySwatch: Colors.blue,
+    //       ),
+    //       initialRoute: SplashScreen.routename,
+    //       routes: {
+    //         LoginScreen.routename: (ctx) => const LoginScreen(),
+    //         SignUpScreen.routename: (ctx) => SignUpScreen(),
+    //         SplashScreen.routename: (ctx) => SplashScreen(),
+    //         HomeScreen.routename: (ctx) => const HomeScreen()
+    //       },
+      )
+    );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HexColor extends Color {
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final int _counter = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, HomeScreen.routename);
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll('#', '');
+    if (hexColor.length == 6) {
+      hexColor = 'FF$hexColor';
+    }
+    return int.parse(hexColor, radix: 16);
   }
 }

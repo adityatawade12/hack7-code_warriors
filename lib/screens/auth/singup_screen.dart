@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
-import 'package:hack7/widgets/ApptextField.dart';
+import 'package:hack7/widgets/app_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -204,14 +204,139 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                         // const SizedBox(height: 40,),
-                        ],
+                        Form(
+                            key: _formKey,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: <Widget>[
+                                  const Text(
+                                    "Sign Up",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  AppTextField(
+                                    controller: nameController,
+                                    hint: "Enter name",
+                                    icon: Icons.person_outlined,
+                                  ),
+                                  ...errormsg(
+                                      nameCheck, "Name cannot be empty"),
+                                  const SizedBox(height: 20),
+                                  AppTextField(
+                                    controller: emailController,
+                                    hint: "Enter your email",
+                                    icon: Icons.contact_mail_outlined,
+                                  ),
+                                  ...errormsg(emailCheck, "Invalid Email"),
+                                  const SizedBox(height: 20),
+                                  AppTextField(
+                                    controller: passController,
+                                    hint: "Enter your password",
+                                    icon: Icons.password_outlined,
+                                    isPassword: true,
+                                  ),
+                                  ...errormsg(
+                                      passCheck, "Create A Stronger Password"),
+                                  const SizedBox(height: 20),
+                                  AppTextField(
+                                    controller: vpaController,
+                                    hint: "Enter VPA",
+                                    icon: Icons.dns_outlined,
+                                    suffix: "@cryptopay",
+                                  ),
+                                  ...errormsg(vpaExist, "VPA Already Taken!"),
+                                  const SizedBox(height: 40),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 40),
+                                    child: ElevatedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: const Color.fromRGBO(
+                                              68, 72, 214, 1),
+                                          fixedSize: const Size(70, 45),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16),
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          /* if (formValidation() && !vpaExist) {
+                                            print("inside");
+                                            var status = await auth.signUp(
+                                                nameController.text,
+                                                emailController.text,
+                                                passController.text,
+                                                vpaController.text +
+                                                    "@cryptopay");
+                                            if (status) {
+                                              Navigator.of(context)
+                                                  .pushReplacementNamed(
+                                                      HomeScreen.routename);
+                                            }
+                                          } */
+                                          // var status = await auth.signIn(
+                                          //     emailController.text, passController.text);
+                                          // Navigator.of(context)
+                                          //     .pushReplacementNamed(HomeScreen.routename);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: const [
+                                              Icon(Icons.check),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text("Create Account",
+                                                style: TextStyle(fontSize: 20)
+                                              ),
+                                      ],
+                                    )
+                                  )
+                                ),
+                              ),
+                            ]
+                          )
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              child: const Text("Already have an account?",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                context, LoginScreen.routename);
+                              },
+                            )
+                          ]
+                        )
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          ]),
-        ));
+          ]
+        ),
+      )
+    );
   }
 }
 
