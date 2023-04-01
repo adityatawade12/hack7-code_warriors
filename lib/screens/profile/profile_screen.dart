@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hack7/providers/web3provider.dart';
+import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void initState() {
-    // var auth = Provider.of<AuthService>(context, listen: false);
+    var auth = Provider.of<AuthService>(context, listen: false);
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: widget.animationController!,
@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   void addAllListData() {
-// /* 
+
     const int count = 5;
     listViews.add(
       ProfileQrView(
@@ -184,12 +184,13 @@ class _ProfileScreenState extends State<ProfileScreen>
         AnimatedBuilder(
           animation: widget.animationController!,
           builder: (BuildContext context, Widget? child) {
-            // var auth = Provider.of<AuthService>(context, listen: false);
+            var auth = Provider.of<AuthService>(context, listen: false);
             return FadeTransition(
               opacity: topBarAnimation!,
               child: Transform(
                 transform: Matrix4.translationValues(
-                    0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
+                  0.0, 30 * (1.0 - topBarAnimation!.value), 0.0
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppTheme.white.withOpacity(topBarOpacity),
@@ -198,8 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -242,15 +242,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
                                 onTap: () async {
-                                  // await auth.signOut();
-                                  Navigator.of(context).pushReplacementNamed(
-                                      LoginScreen.routename);
-                                  /* await Provider.of<Web3EthProvider>(context,
-                                          listen: false)
-                                      .createPaymentRequest(
-                                          10,
-                                          auth.loggedInUser.primaryAccount,
-                                          "recver@cryptopay"); */
+                                  await auth.signOut();
+
+                                  Navigator.of(context).pushReplacementNamed(LoginScreen.routename);
+
+                                  // await Provider.of<Web3EthProvider>(context,listen: false)
+                                  //   .createPaymentRequest(10, auth.loggedInUser.primaryAccount,
+                                  //         "recver@cryptopay");
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,

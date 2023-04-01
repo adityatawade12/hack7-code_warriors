@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_radio_tile.dart';
@@ -30,12 +31,13 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
   @override
   void initState() {
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
+      duration: const Duration(milliseconds: 600), vsync: this
+    );
     // tabBody = AccountScreen(animationController: animationController);
     
-/*     selectedAcc = Provider.of<AuthService>(context, listen: false)
+    selectedAcc = Provider.of<AuthService>(context, listen: false)
         .loggedInUser
-        .primaryAccount; */
+        .primaryAccount;
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: animationController!,
@@ -96,9 +98,9 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
   }
 
   setPrimaryAcc(acc) {
-    // setState(() {
-    //   selectedAcc = acc;
-    // });
+    setState(() {
+      selectedAcc = acc;
+    });
   }
 
   @override
@@ -142,10 +144,14 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
           groupval: selectedAcc,
           func: setPrimaryAcc,
           animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: animationController!,
-                  curve: const Interval((1 / 10) * 8, 1.0,
-                      curve: Curves.fastOutSlowIn))),
+            CurvedAnimation(
+              parent: animationController!,
+              curve: const Interval(
+                (1 / 10) * 8, 1.0,
+                curve: Curves.fastOutSlowIn
+              )
+            )
+          ),
           animationController: animationController,
         );
       },
@@ -154,7 +160,7 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
   }
 
   Widget getAppBarUI() {
-    // var auth = Provider.of<AuthService>(context, listen: false);
+    var auth = Provider.of<AuthService>(context, listen: false);
     return Column(
       children: <Widget>[
         AnimatedBuilder(
@@ -229,8 +235,8 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
                                 onTap: () async {
-                                  // await auth.updatePrimaryAccount(selectedAcc);
-
+                                  await auth.updatePrimaryAccount(selectedAcc);
+                                  
                                   animationController?.reverse().then((value) {
                                     Navigator.of(context).pop();
                                   });

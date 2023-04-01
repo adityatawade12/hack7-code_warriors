@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
+import 'package:provider/provider.dart';
 
 class LoadingAccountTileList extends StatefulWidget {
   const LoadingAccountTileList(
@@ -34,7 +36,7 @@ class _LoadingAccountTileListState extends State<LoadingAccountTileList>
 
   @override
   Widget build(BuildContext context) {
-    // var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {

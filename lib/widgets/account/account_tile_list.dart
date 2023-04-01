@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,8 @@ class AccountTileList extends StatefulWidget {
 class _AccountTileListState extends State<AccountTileList> {
   @override
   Widget build(BuildContext context) {
-    // var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -33,13 +35,13 @@ class _AccountTileListState extends State<AccountTileList> {
             child: Padding(
                 padding: const EdgeInsets.only(
                     left: 10, right: 10, top: 0, bottom: 18),
-                child: Container(
+                child: SizedBox(
                   height: 350,
                   // color: Colors.amber,
                   width: double.infinity,
                   // color: Colors.yellow,
                   child: FutureBuilder(
-                    // future: web3.fetchStoredAccounts(),
+                    future: web3.fetchStoredAccounts(),
                     builder: (BuildContext context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
@@ -48,7 +50,7 @@ class _AccountTileListState extends State<AccountTileList> {
                           ),
                         );
                       } else {
-                        if (/* web3.storedAccounts.length == 0 */ true) {
+                        if (web3.storedAccounts.isEmpty) {
                           return Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, top: 10, bottom: 45),
@@ -102,10 +104,14 @@ class _AccountTileListState extends State<AccountTileList> {
                             ),
                           );
                         }
+                        return const SizedBox(
+                          height: 0,
+                        );
                       }
                     },
                   ),
-                )),
+                )
+              ),
           ),
         );
       },

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_header.dart';
@@ -247,24 +248,17 @@ class _AccountScreenState extends State<AccountScreen>
                                       //   //     PaymentRequestScreen.routename);
                                       // });
                                     },
-                                    icon:
-                                        // const ImageIcon(
-                                        //   AssetImage('assets/images/notif.png'),
-                                        //   size: 35,
-                                        // )
-                                        const Icon(
+                                    icon: const Icon(
                                       Icons.request_quote_outlined,
                                       size: 35,
                                       // color: ,
                                     )),
                                   FutureBuilder(
-                                    /* future: Provider.of<Web3EthProvider>(context,
-                                            listen: false)
+                                    future: Provider.of<Web3EthProvider>(context, listen: false)
                                         .getPaymentRequests(
-                                            Provider.of<AuthService>(context,
-                                                    listen: false)
+                                            Provider.of<AuthService>(context, listen: false)
                                                 .loggedInUser
-                                                .vpa), */
+                                                .vpa),
                                     builder: ((ct, snapshot) {
                                       if (snapshot.hasData) {
                                         return Positioned(

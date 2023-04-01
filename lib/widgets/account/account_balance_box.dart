@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
   var _switchState = false;
   @override
   Widget build(BuildContext context) {
-    // var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
 
     return AnimatedBuilder(
       animation: widget.animationController!,
@@ -49,8 +50,8 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                     ),
                   ),
                   child: FutureBuilder(
-                      // future: Provider.of<Web3EthProvider>(context, listen: false)
-                      //     .getAccountBalance(widget.account),
+                      future: Provider.of<Web3EthProvider>(context, listen: false)
+                          .getAccountBalance(widget.account),
                       builder: (ctx, dataSnapshot) {
                         if (dataSnapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -66,7 +67,7 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                             );
                           }
                           var data = dataSnapshot.data as Map<String, dynamic>;
-                          return Consumer/* <Web3EthProvider> */(
+                          return Consumer<Web3EthProvider>(
                               builder: (ctx, crypto, child) => Column(
                                     children: [
                                       Row(
@@ -151,7 +152,7 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             height: 20,
                                             child: Image.network(
                                                 "https://cdn-icons-png.flaticon.com/512/8042/8042859.png"),
@@ -161,11 +162,9 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                                                   fontSize: 19,
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w600)),
-                                          const Text(
-                                            "\u{20B9} " +
-                                                "web3.rupee",
-                                                // web3.rupee.toStringAsFixed(0),
-                                            style: TextStyle(
+                                          Text(
+                                            "\u{20B9} ${web3.rupee.toStringAsFixed(0)}",
+                                            style: const TextStyle(
                                                 fontSize: 19,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w500),
@@ -174,9 +173,13 @@ class _AccountBalanceState extends State<AccountBalanceBox> {
                                       ),
                                       const Spacer()
                                     ],
-                                  ));
-                        }
-                      }))),
+                                  )
+                                );
+                  }
+                }
+              )
+            )
+          ),
         );
       },
     );

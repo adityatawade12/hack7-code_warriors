@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,9 @@ class _KeyDialogState extends State<KeyDialog> {
                       Pinput(
                         focusNode: focusNode,
                         onCompleted: (pin) async {
-                          print("First");
+                          if (kDebugMode) {
+                            print("First");
+                          }
                           var x = await web3.decryptPrivatekey(
                               widget.address, pinController.text);
                           if (x['status'] == "fail") {
