@@ -29,6 +29,12 @@ dependencies:
   crypto: ^3.0.2
   http: ^0.13.4
   dio: ^4.0.6
+  firebase_core: ^2.3.0
+  firebase_auth: ^4.1.4
+  cloud_firestore: ^4.1.0
+  rxdart: ^0.27.7
+  pushy_flutter: 2.0.11
+  awesome_notifications: ^0.7.4+1
 
 dev_dependencies:
   flutter_test:

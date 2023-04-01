@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.initFlutter(directory.path);
   runApp(const MyApp());

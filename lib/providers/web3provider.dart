@@ -1,20 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-
+import 'package:cloud_firestore/cloud_firestore.dart' as FS;
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hack7/models/account.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart';
+
 import 'package:tuple/tuple.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../env/env.dart';
 
 class Web3EthProvider with ChangeNotifier {
@@ -96,7 +97,7 @@ class Web3EthProvider with ChangeNotifier {
 
     notifyListeners();
 
-    return Account(newAccount.accountAddress, plainText, name);
+    return Account(newAccount.accountAddress, plainText, name, category);
   }
 
   Future<void> fetchStoredAccounts() async {
@@ -208,24 +209,35 @@ class Web3EthProvider with ChangeNotifier {
     BigInt c = BigInt.from(ex);
     BigInt m = BigInt.from(amt);
     BigInt x = m * we ~/ c;
-
+    // ;
+    print("==");
+    print(x);
     // "0x858c4f9506ddf2904d14aa619580e193cba4bfb4"
     var maxgas = await client.estimateGas(
         sender: EthereumAddress.fromHex(senderAddress),
         to: address,
         value: EtherAmount.fromUnitAndValue(EtherUnit.wei, x));
-
+    print(maxgas.toInt());
+    print(EtherAmount.fromUnitAndValue(EtherUnit.wei, x));
+    print(EtherAmount.fromUnitAndValue(EtherUnit.ether, x));
     try {
       var trns = await client.sendTransaction(
           credentials,
           Transaction(
             to: address,
+
+            // maxGas: balance,
             gasPrice: EtherAmount.inWei(BigInt.from(2000000000)),
+
             maxGas: maxgas.toInt(),
             value: EtherAmount.fromUnitAndValue(EtherUnit.wei, x),
           ),
           chainId: (await client.getChainId()).toInt());
-
+      // chainId: (await client.getChainId()).toInt()
+      // 882104359078718053
+      // 4505722723997348
+      print(trns);
+      print("After trns");
       var db = FS.FirebaseFirestore.instance;
       final userDb = <String, dynamic>{
         "sender": senderAddress.toLowerCase(),
@@ -240,6 +252,10 @@ class Web3EthProvider with ChangeNotifier {
       var obj = await db.collection('users').where("accounts",
           arrayContainsAny: [recvAddress.toLowerCase()]).get();
 
+      // var senderuser=await db.collection("users").
+      print("Object:");
+      print(obj.docs[0].data());
+
       if (obj.docs.length > 0) {
         try {
           var reqBody = {
@@ -250,12 +266,25 @@ class Web3EthProvider with ChangeNotifier {
               "transactionId": userDb["transactionHash"]
             },
           };
-          //pushyresp
+          Response response = await Dio().post(
+            "https://api.pushy.me/push?api_key=" + Env.NOTIFKEY,
+            options: Options(headers: {
+              HttpHeaders.contentTypeHeader: "application/json",
+            }),
+            data: jsonEncode(reqBody),
+          );
 
+          // if (json.decode(response.body) == null) {
+          //   return {"rupee": 0, "ether": 0.0};
+          // }
+          print("printing response");
+          print(response.data);
+          print(response.data.runtimeType);
           // final extractedData =
           //     json.decode(response.body) as Map<String, dynamic>;
           // print(extractedData);
         } catch (e) {
+          print("===================");
           print(e);
         }
       }
@@ -265,6 +294,54 @@ class Web3EthProvider with ChangeNotifier {
       print(e);
       return 0;
     }
+  }
+
+  Future getPaymentRequests(vpa) async {
+    var firestore = FS.FirebaseFirestore.instance;
+    var requests = await firestore
+        .collection('paymentRequests')
+        .where("receiver", isEqualTo: vpa)
+        .get();
+    if (requests.docs.length == 0) {
+      return null;
+    }
+    var data = [];
+    var otherAcc = [];
+    requests.docs.forEach((element) {
+      data.add(element.data() as Map<String, dynamic>);
+      otherAcc.add(element['sender']);
+    });
+
+    // print(otherAcc);
+    final accountNames = await firestore
+        .collection('users')
+        .where("accounts", arrayContainsAny: otherAcc)
+        .get();
+
+    for (var element in data) {
+      print("Index");
+      print(element);
+
+      element['senderName'] = "";
+
+      element['receiverName'] = "Ady";
+
+      for (var e1 in accountNames.docs) {
+        var e = e1.data();
+        print("asdas");
+        print(e);
+        if (e['accounts'].contains(element['sender'])) {
+          element['senderName'] = e['name'];
+        }
+      }
+      // }
+    }
+
+    data.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
+    print("transList");
+    print(data);
+
+    return data;
   }
 }
 
