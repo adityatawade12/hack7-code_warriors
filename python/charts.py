@@ -38,6 +38,8 @@ data_use = json.loads(data)
 # print(data_use['month'][0])
 incomes = []
 expenditure = []
+average_income = []
+average_expenditure = []
 for i in range(0,12):
     incomes.append(int(data_use['month'][0]['income']))
     expenditure.append(int(data_use['month'][0]['expenditure']))
@@ -47,6 +49,20 @@ score_data = pd.DataFrame({
     'Expenditure': expenditure
 })
 print(score_data)
+for i in range(0,12):
+    inc = 0
+    exp = 0
+    avg_inc = 0
+    avg_exp =0  
+    for j in range(0,i+1):
+        inc = inc + int(data_use['month'][j]['income'])
+        exp = exp + int(data_use['month'][j]['expenditure'])
+    avg_inc = inc / i+1
+    avg_exp = exp / i+1
+    average_income.append(avg_inc)
+    average_expenditure.append(avg_exp)
+
+
 
 
 # df1 = pd.DataFrame('Month', sales=[10, 8, 30]))

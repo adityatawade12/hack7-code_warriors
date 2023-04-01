@@ -1,0 +1,13 @@
+name,income,expenditure,ethereum,solana,kjh,categories
+January,10000,5000,2000,1000,2000,"[{'name': 'groceries', 'amount': '2500'}, {'name': 'entertainment', 'amount': '2000'}, {'name': 'travel', 'amount': '500'}]"
+February,15000,7000,3400,1600,3000,"[{'name': 'groceries', 'amount': '4000'}, {'name': 'entertainment', 'amount': '2000'}, {'name': 'travel', 'amount': '1000'}]"
+March,14000,8000,4750,1560,1690,"[{'name': 'groceries', 'amount': '4500'}, {'name': 'entertainment', 'amount': '2500'}, {'name': 'travel', 'amount': '1000'}]"
+April,14500,12000,4000,1000,7000,"[{'name': 'groceries', 'amount': '8000'}, {'name': 'entertainment', 'amount': '2000'}, {'name': 'travel', 'amount': '2000'}]"
+May,15000,6500,2000,2000,2500,"[{'name': 'groceries', 'amount': '1500'}, {'name': 'entertainment', 'amount': '4000'}, {'name': 'travel', 'amount': '500'}]"
+June,10000,5000,1500,1750,1750,"[{'name': 'groceries', 'amount': '2500'}, {'name': 'entertainment', 'amount': '1500'}, {'name': 'travel', 'amount': '1000'}]"
+July,9500,6000,2000,2000,2000,"[{'name': 'groceries', 'amount': '3000'}, {'name': 'entertainment', 'amount': '2000'}, {'name': 'travel', 'amount': '1000'}]"
+August,14000,7000,500,2650,3850,"[{'name': 'groceries', 'amount': '4000'}, {'name': 'entertainment', 'amount': '2000'}, {'name': 'travel', 'amount': '1000'}]"
+September,14000,8000,3500,3000,1500,"[{'name': 'groceries', 'amount': '3070'}, {'name': 'entertainment', 'amount': '3500'}, {'name': 'travel', 'amount': '1430'}]"
+October,15000,7000,2000,2000,3000,"[{'name': 'groceries', 'amount': '2500'}, {'name': 'entertainment', 'amount': '2000'}, {'name': 'travel', 'amount': '2500'}]"
+November,0,0,0,0,0,"[{'name': 'groceries', 'amount': '0'}, {'name': 'entertainment', 'amount': '0'}, {'name': 'travel', 'amount': '0'}]"
+December,0,0,0,0,0,"[{'name': 'groceries', 'amount': '0'}, {'name': 'entertainment', 'amount': '0'}, {'name': 'travel', 'amount': '0'}]"
