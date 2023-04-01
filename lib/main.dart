@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hack7/screens/SplashScreen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/providers/web3provider.dart';
+import 'package:hack7/screens/auth/singup_screen.dart';
 import 'package:hack7/screens/home.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           initialRoute: SplashScreen.routename,
           routes: {
             LoginScreen.routename: (ctx) => const LoginScreen(),
+            SignUpScreen.routename: (ctx) => SignUpScreen(),
             SplashScreen.routename: (ctx) => SplashScreen(),
             HomeScreen.routename: (ctx) => const HomeScreen()
           },
