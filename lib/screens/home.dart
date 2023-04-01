@@ -66,7 +66,7 @@ class _FitnessAppHomeScreenState extends State<HomeScreen>
             } else {
               return Stack(
                 children: <Widget>[
-                  // tabBody,
+                  tabBody,
                   bottomBar(),
                 ],
               );
@@ -96,10 +96,10 @@ class _FitnessAppHomeScreenState extends State<HomeScreen>
         BottomBarView(
           tabIconsList: tabIconsList,
           addClick: () {
-            // animationController?.reverse().then((value) {
+            animationController?.reverse().then((value) {
               // Navigator.pushNamed(context, CamScanScreen.routename)
               //     .then(onGoBack);
-            // });
+            });
             // Navigator.push(context, CamScan(animationController: animationController));
           },
           changeIndex: (int index) {

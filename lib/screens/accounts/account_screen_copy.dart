@@ -1,3 +1,4 @@
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -17,8 +18,8 @@ class AccountScreen extends StatefulWidget {
   _AccountScreenState createState() => _AccountScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen>
-    with TickerProviderStateMixin {
+class _AccountScreenState extends State<AccountScreen> with TickerProviderStateMixin {
+
   Animation<double>? topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
@@ -26,100 +27,6 @@ class _AccountScreenState extends State<AccountScreen>
   List<Widget> listViewsFilled = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
-
-  @override
-  void initState() {
-    topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-
-    // await ve3.fetchStoredAccounts();
-    // print(ve3.storedAccounts);
-    listViews = [];
-    addAllListData();
-
-    scrollController.addListener(() {
-      if (scrollController.offset >= 24) {
-        if (topBarOpacity != 1.0) {
-          setState(() {
-            topBarOpacity = 1.0;
-          });
-        }
-      } else if (scrollController.offset <= 24 &&
-          scrollController.offset >= 0) {
-        if (topBarOpacity != scrollController.offset / 24) {
-          setState(() {
-            topBarOpacity = scrollController.offset / 24;
-          });
-        }
-      } else if (scrollController.offset <= 0) {
-        if (topBarOpacity != 0.0) {
-          setState(() {
-            topBarOpacity = 0.0;
-          });
-        }
-      }
-    });
-    super.initState();
-  }
-
-  void addAllListData() {
-    const int count = 10;
-
-    listViews.add(
-      TitleView(
-        titleTxt: 'Current Exchange',
-        subTxt: 'Details',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 0, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-
-    listViews.add(
-      ExchangeBox(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 2, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      AccountsHeader(
-        titleTxt: 'My Accounts',
-        subTxt: 'Add Account',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 0, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-        onGoBack: onGoBack,
-      ),
-    );
-
-    listViews.add(AccountTileList(
-      animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-          parent: widget.animationController!,
-          curve:
-              const Interval((1 / 10) * 7, 1.0, curve: Curves.fastOutSlowIn))),
-      animationController: widget.animationController!,
-      onGoBack: onGoBack,
-    ));
-  }
-
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
-    return true;
-  }
-
-  FutureOr onGoBack(dynamic value) {
-    widget.animationController!.forward();
-    // setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +48,6 @@ class _AccountScreenState extends State<AccountScreen>
   }
 
   Widget getMainListViewUI() {
-    // var web3 = Provider.of<Web3Api>(context, listen: false);
     return FutureBuilder(
       future: getData(),
       builder: (BuildContext context, snapshot) {
@@ -241,65 +147,23 @@ class _AccountScreenState extends State<AccountScreen>
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                      // widget.animationController!
-                                      //     .reverse()
-                                      //     .then((value) {
-                                      //   // Navigator.of(context).pushNamed(
-                                      //   //     PaymentRequestScreen.routename);
-                                      // });
+                                      widget.animationController!
+                                          .reverse()
+                                          .then((value) {
+                                      //   Navigator.of(context).pushNamed(
+                                      //       PaymentRequestScreen.routename);
+                                      })
+                                      ;
                                     },
                                     icon:
                                         // const ImageIcon(
                                         //   AssetImage('assets/images/notif.png'),
                                         //   size: 35,
                                         // )
-                                        Icon(
+                                        const Icon(
                                       Icons.request_quote_outlined,
                                       size: 35,
-                                      // color: ,
                                     )),
-                              /*   FutureBuilder(
-                                    future: Provider.of<Web3Api>(context,
-                                            listen: false)
-                                        .getPaymentRequests(
-                                            Provider.of<AuthService>(context,
-                                                    listen: false)
-                                                .loggedInUser
-                                                .vpa),
-                                    builder: ((ct, snapshot) {
-                                      if (snapshot.hasData) {
-                                        return Positioned(
-                                          right: 8,
-                                          top: 8,
-                                          child: Container(
-                                            padding: const EdgeInsets.all(2.0),
-                                            // color: Theme.of(context).accentColor,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.red,
-                                            ),
-                                            constraints: const BoxConstraints(
-                                              minWidth: 16,
-                                              minHeight: 16,
-                                            ),
-                                            child: Text(
-                                              (snapshot.data.length).toString(),
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      return const SizedBox(
-                                        height: 0,
-                                        width: 0,
-                                      );
-                                    }))
-                               */
                               ],
                             ),
                           ],
@@ -315,4 +179,65 @@ class _AccountScreenState extends State<AccountScreen>
       ],
     );
   }
+  
+  void addAllListData() {
+    const int count = 10;
+    
+    listViews.add(
+      TitleView(
+        titleTxt: 'Current Exchange',
+        subTxt: 'Details',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve: const Interval((1 / count) * 0, 1.0,
+                curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
+
+    listViews.add(
+      ExchangeBox(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve: const Interval((1 / count) * 2, 1.0,
+                curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
+    listViews.add(
+      AccountsHeader(
+        titleTxt: 'My Accounts',
+        subTxt: 'Add Account',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve: const Interval((1 / count) * 0, 1.0,
+                curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+        onGoBack: onGoBack,
+      ),
+    );
+
+    listViews.add(
+      AccountTileList(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+          parent: widget.animationController!,
+          curve:
+              const Interval((1 / 10) * 7, 1.0, curve: Curves.fastOutSlowIn))),
+      animationController: widget.animationController!,
+      onGoBack: onGoBack,
+    ));
+  }
+
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    return true;
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    widget.animationController!.forward();
+    // setState(() {});
+  }
+
+
 }
+

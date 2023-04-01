@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hack7/screens/auth/LoginScreen.dart';
+import 'package:hack7/screens/SplashScreen.dart';
+import 'package:hack7/screens/auth/login_screen.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/screens/home.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +19,15 @@ class MyApp extends StatelessWidget {
         providers: [ChangeNotifierProvider(create: (ctx) => Web3Provider())],
         child: MaterialApp(
           title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          initialRoute: HomeScreen.routename,
+          initialRoute: SplashScreen.routename,
           routes: {
-            LoginScreen.routename: (ctx) => LoginScreen(),
-            HomeScreen.routename: (ctx) => const HomeScreen(),
+            LoginScreen.routename: (ctx) => const LoginScreen(),
+            SplashScreen.routename: (ctx) => SplashScreen(),
+            HomeScreen.routename: (ctx) => const HomeScreen()
           },
         ));
   }
