@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:hack7/themes/homeapptheme.dart';
 
 class CreateNewAccount extends StatefulWidget {
   CreateNewAccount({Key? key}) : super(key: key);
@@ -60,8 +63,54 @@ class _CreateNewAccountState extends State<CreateNewAccount>
     // ));
   }
 
+  FutureOr onGoBack(dynamic value) {
+    animationController!.forward();
+    setState(() {});
+  }
+
+  @override
+  dispose() {
+    animationController!.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GestureDetector(
+      onDoubleTap: () {
+        final FocusScopeNode currentScope = FocusScope.of(context);
+        if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: HomeAppTheme.background,
+        body: Stack(
+          children: <Widget>[
+            Center(
+                child: ListView.builder(
+              shrinkWrap: true,
+              controller: scrollController,
+              padding: EdgeInsets.only(
+                top: AppBar().preferredSize.height +
+                    MediaQuery.of(context).padding.top +
+                    24,
+                bottom: 62 + MediaQuery.of(context).padding.bottom,
+              ),
+              itemCount: listViews.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (BuildContext context, int index) {
+                animationController?.forward();
+                return listViews[index];
+              },
+            )),
+            // getAppBarUI(),
+            SizedBox(
+              height: MediaQuery.of(context).padding.bottom,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
