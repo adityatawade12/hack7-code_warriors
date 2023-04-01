@@ -4,9 +4,11 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hack7/models/account.dart';
 import 'package:hive/hive.dart';
+import 'package:http/http.dart';
 import 'package:tuple/tuple.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
@@ -170,6 +172,98 @@ class Web3EthProvider with ChangeNotifier {
       return {"status": "fail"};
     } else {
       return {"status": "pass", "key": decryptedKey};
+    }
+  }
+
+  Future<int> getEtherExchange() async {
+    try {
+      var url = Uri.parse(exchangeAPI);
+      final response = await http.get(url);
+      if (json.decode(response.body) == null) {
+        return 0;
+      }
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      rupee = extractedData['ethereum']!['inr'];
+      // rupee = extractedData['INR']!.floor();
+      print("Rupee:");
+      print(rupee);
+      return rupee;
+
+      // notifyListeners();
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+    return 1;
+  }
+
+  Future<int> makePayment(
+      String senderAddress, String recvAddress, privKey, amt) async {
+    final client = Web3Client(rpcUrl, http.Client());
+    // "0xb634386141e7b34898e7684d355bf67da40b0e5e"
+    final address = EthereumAddress.fromHex(recvAddress);
+    final credentials = EthPrivateKey.fromHex(privKey);
+    var ex = await getEtherExchange();
+    BigInt we = BigInt.from(1000000000000000000);
+    BigInt c = BigInt.from(ex);
+    BigInt m = BigInt.from(amt);
+    BigInt x = m * we ~/ c;
+
+    // "0x858c4f9506ddf2904d14aa619580e193cba4bfb4"
+    var maxgas = await client.estimateGas(
+        sender: EthereumAddress.fromHex(senderAddress),
+        to: address,
+        value: EtherAmount.fromUnitAndValue(EtherUnit.wei, x));
+
+    try {
+      var trns = await client.sendTransaction(
+          credentials,
+          Transaction(
+            to: address,
+            gasPrice: EtherAmount.inWei(BigInt.from(2000000000)),
+            maxGas: maxgas.toInt(),
+            value: EtherAmount.fromUnitAndValue(EtherUnit.wei, x),
+          ),
+          chainId: (await client.getChainId()).toInt());
+
+      var db = FS.FirebaseFirestore.instance;
+      final userDb = <String, dynamic>{
+        "sender": senderAddress.toLowerCase(),
+        "receiver": recvAddress.toLowerCase(),
+        "transactionHash": trns,
+        "amount": amt,
+        "exchange": ex,
+        "timestamp": DateTime.now().millisecondsSinceEpoch
+      };
+
+      db.collection("transactions").doc().set(userDb);
+      var obj = await db.collection('users').where("accounts",
+          arrayContainsAny: [recvAddress.toLowerCase()]).get();
+
+      if (obj.docs.length > 0) {
+        try {
+          var reqBody = {
+            "to": obj.docs[0].data()['notifId'],
+            "data": {
+              "message":
+                  "Received Rs.${userDb["amount"]} from ${senderAddress}",
+              "transactionId": userDb["transactionHash"]
+            },
+          };
+          //pushyresp
+
+          // final extractedData =
+          //     json.decode(response.body) as Map<String, dynamic>;
+          // print(extractedData);
+        } catch (e) {
+          print(e);
+        }
+      }
+
+      return 1;
+    } catch (e) {
+      print(e);
+      return 0;
     }
   }
 }
