@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hack7/screens/home.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/ApptextField.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routename = '/login';
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -12,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool signup = false;
-  GlobalKey _formKey = GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passController = TextEditingController();
   bool invalidCreds = false;
@@ -30,10 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
   errorWidget(invalidCred) {
     if (invalidCreds) {
       return [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(10),
           child: Text("Invalid Credentials!",
               textAlign: TextAlign.center,
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: SafeArea(
                   child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,18 +94,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         // ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         AppTextField(
                             controller: emailController,
                             hint: "Enter Email",
                             icon: Icons.mail),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         AppTextField(
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ...errorWidget(invalidCreds),
                         const SizedBox(height: 40),
                         Padding(
-                          padding: EdgeInsets.all(30),
+                          padding: const EdgeInsets.all(30),
                           child: ElevatedButton(
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.white,
@@ -128,8 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     BorderRadius.all(Radius.circular(8)),
                               ),
                             ),
-                            child: Text("Login"),
-                            onPressed: () {},
+                            child: const Text("Login"),
+                            onPressed: () {
+                              Navigator.pushNamed(context, HomeScreen.routename);
+                            },
                           ),
                         ),
                         Row(
@@ -156,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ])
                       ],
                     ),
-                    Spacer()
+                    const Spacer()
                   ],
                 ),
               )),

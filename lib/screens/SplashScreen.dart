@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hack7/screens/account/AddAccountsScreen.dart';
 
-import 'auth/LoginScreen.dart';
+import 'auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routename = '/splash';
