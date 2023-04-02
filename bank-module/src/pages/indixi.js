@@ -2,9 +2,11 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
 
-// import Token from '../abis/Token.json'
-
+import bankABI from "@/contract/abi/dbank.json"
+import tokenABI from '@/contract/abi/Token.json'
 import Web3 from 'web3';
+
+
 import Image from 'next/image';
 
 
@@ -45,9 +47,9 @@ export default function Home() {
 				window.alert('Please login with metamask')
 			}
 			try {
-				const tk = new web3.eth.Contract(Token.abi, Token.networks[netId].address)
-				const dbk = new web3.eth.Contract(dBank.abi, dBank.networks[netId].address)
-				const dbkAdd = dBank.networks[netId].address
+				const tk = new web3.eth.Contract(tokenABI.abi, tokenABI.networks[netId].address)
+				const dbk = new web3.eth.Contract(bankABI.abi, bankABI.networks[netId].address)
+				const dbkAdd = bankABI.networks[netId].address
 				settoken(tk);
 				setdbank(dbk);
 				setdBankAddress(dbkAdd);
