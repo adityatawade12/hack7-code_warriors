@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
 import 'package:hack7/main.dart';
 import 'package:hack7/providers/fbdbprovider.dart';
@@ -11,15 +10,16 @@ import 'package:hack7/widgets/transaction/transaction_list.dart';
 import 'package:hack7/widgets/transaction/transactions_header.dart';
 import 'package:provider/provider.dart';
 
-
 class PassBookAndTransactionScreen extends StatefulWidget {
   static const routename = "/pnt";
   final String address;
   final String name;
+  final String type;
   const PassBookAndTransactionScreen({
     Key? key,
     required this.address,
     required this.name,
+    required this.type,
   }) : super(key: key);
 
   @override
@@ -83,13 +83,14 @@ class _PassBookAndTransactionScreenState
 
     listViews.add(
       AccountBalanceBox(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: animationController!,
-            curve:
-                const Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: animationController!,
-        account: args['address'],
-      ),
+          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+              CurvedAnimation(
+                  parent: animationController!,
+                  curve: const Interval((1 / count) * 2, 1.0,
+                      curve: Curves.fastOutSlowIn))),
+          animationController: animationController!,
+          account: args['address'],
+          type: widget.type),
     );
 
     listViews.add(
@@ -109,10 +110,11 @@ class _PassBookAndTransactionScreenState
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: animationController!,
-                curve:
-                    const Interval((1 / 10) * 7, 1.0, curve: Curves.fastOutSlowIn))),
+                curve: const Interval((1 / 10) * 7, 1.0,
+                    curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: animationController!,
         address: args['address'],
+        type: widget.type,
         onGoBack: onGoBack));
   }
 
@@ -141,6 +143,7 @@ class _PassBookAndTransactionScreenState
                       builder: (ctx) => AccountQrScreen(
                             address: widget.address,
                             name: widget.name,
+                            type: widget.type,
                           ))).then(onGoBack);
             });
           },
@@ -233,8 +236,7 @@ class _PassBookAndTransactionScreenState
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],

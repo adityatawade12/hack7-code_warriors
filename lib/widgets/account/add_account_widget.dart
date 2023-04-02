@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hack7/screens/accounts/add_accounts_screen.dart';
+import 'package:hack7/screens/accounts/create_new_account.dart';
+import 'package:hack7/screens/accounts/import_account_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 
 class AddAccountWidget extends StatelessWidget {
@@ -68,7 +70,7 @@ class AddAccountWidget extends StatelessWidget {
                       onTap: () {
                         animationController!.reverse().then((value) {
                           Navigator.pushNamed(
-                                  context, AddAccountScreen.routename)
+                                  context, CreateAccountScreen.routename)
                               .then(onGoBack);
                         });
                       }),
@@ -144,7 +146,8 @@ class AddAccountWidget extends StatelessWidget {
                     ),
                     onTap: () {
                       animationController!.reverse().then((value) {
-                        Navigator.pushNamed(context, AddAccountScreen.routename)
+                        Navigator.pushNamed(
+                                context, ImportAccountScreen.routename)
                             .then(onGoBack);
                       });
                     },

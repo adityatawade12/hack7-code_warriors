@@ -6,7 +6,6 @@ import 'package:hack7/screens/payment/pay_pin_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
-
 class PayScreen extends StatefulWidget {
   // const PayScreen({Key? key}) : super(key: key);
   static const routename = '/pay';
@@ -21,8 +20,9 @@ class PayScreen extends StatefulWidget {
   final String recvAccount;
   final String name;
   final String vpa;
+  final String type;
 
-  PayScreen(this.recvAccount, this.name, this.vpa);
+  PayScreen(this.recvAccount, this.name, this.vpa, this.type);
 
   @override
   State<PayScreen> createState() => _PayScreenState();
@@ -33,7 +33,13 @@ class _PayScreenState extends State<PayScreen> {
   @override
   void initState() {
     super.initState();
-    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3;
+    if (widget.type == "sol") {
+      web3 = Provider.of<Web3SolProvider>(context, listen: false);
+    } else {
+      web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    }
+
     web3.fetchStoredAccounts().then((data) {
       setState(() {
         widget.allAccounts = web3.storedAccounts;
@@ -70,7 +76,8 @@ class _PayScreenState extends State<PayScreen> {
                               child: RadioListTile(
                                 title: Text(
                                   allAccounts[index].name,
-                                  style: const TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +170,12 @@ class _PayScreenState extends State<PayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3;
+    if (widget.type == "sol") {
+      web3 = Provider.of<Web3SolProvider>(context, listen: false);
+    } else {
+      web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    }
 
     return Scaffold(
       body: Padding(
@@ -204,7 +216,8 @@ class _PayScreenState extends State<PayScreen> {
               child: Text(
                 widget.recvAccount,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
               ),
             ),
             const SizedBox(
@@ -249,12 +262,15 @@ class _PayScreenState extends State<PayScreen> {
             Container(
                 height: 30,
                 child: FutureBuilder(
-                    future: web3.getEtherExchange(),
+                    future: (widget.type == "eth")
+                        ? web3.getEtherExchange()
+                        : web3.getSolExchange(),
                     builder: ((context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
                           child: Container(
-                              width: 30, child: const CircularProgressIndicator()),
+                              width: 30,
+                              child: const CircularProgressIndicator()),
                         );
                       } else {
                         if (snapshot.error != null) {
@@ -298,7 +314,8 @@ class _PayScreenState extends State<PayScreen> {
                             trailing: IconButton(
                                 onPressed: () =>
                                     _showModalSheet(widget.allAccounts, web3),
-                                icon: const Icon(Icons.change_history_outlined)),
+                                icon:
+                                    const Icon(Icons.change_history_outlined)),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -329,17 +346,18 @@ class _PayScreenState extends State<PayScreen> {
                                         );
                                       });
                                 } else {
-                                  /* var extra = await web3.getPayableAmount(
+                                  var extra = await web3.getPayableAmount(
                                     int.parse(payController.text),
                                     widget.selectedAccount.accountAddress,
                                     widget.recvAccount,
-                                  ); 
-                                   Navigator.of(context).push(MaterialPageRoute(
+                                  );
+                                  Navigator.of(context).push(MaterialPageRoute(
                                       builder: (ctx) => PayPinScreen(
                                           widget.selectedAccount.accountAddress,
                                           widget.recvAccount,
                                           int.parse(payController.text),
-                                          extra))); */
+                                          extra,
+                                          widget.type)));
                                 }
                               }
                             },

@@ -88,18 +88,18 @@ class _AccountScreenState extends State<AccountScreen>
         animationController: widget.animationController!,
       ),
     );
-    // listViews.add(
-    //   AccountsHeader(
-    //     titleTxt: 'My Accounts',
-    //     subTxt: 'Add Account',
-    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-    //         parent: widget.animationController!,
-    //         curve: const Interval((1 / count) * 0, 1.0,
-    //             curve: Curves.fastOutSlowIn))),
-    //     animationController: widget.animationController!,
-    //     onGoBack: onGoBack,
-    //   ),
-    // );
+    listViews.add(
+      AccountsHeader(
+        titleTxt: 'My Accounts',
+        subTxt: 'Add Account',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve: const Interval((1 / count) * 0, 1.0,
+                curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+        onGoBack: onGoBack,
+      ),
+    );
 
     listViews.add(AccountTypes(
       animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(

@@ -115,12 +115,12 @@ class _ExchangeBoxState extends State<ExchangeBox> {
                                             ),
                                             const Text(" 1 = ",
                                                 style: TextStyle(
-                                                    fontSize: 45,
+                                                    fontSize: 35,
                                                     color: AppTheme.white)),
                                             Text(
                                               "\u{20B9}$data",
                                               style: const TextStyle(
-                                                  fontSize: 45,
+                                                  fontSize: 35,
                                                   color: AppTheme.white),
                                             ),
                                           ],
@@ -275,7 +275,7 @@ class _ExchangeBoxState extends State<ExchangeBox> {
                                             ),
                                             const Text(" 1 = ",
                                                 style: TextStyle(
-                                                    fontSize: 45,
+                                                    fontSize: 35,
                                                     color: AppTheme.white)),
                                             Text(
                                               "\u{20B9}$data",

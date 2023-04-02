@@ -8,13 +8,13 @@ import 'package:hack7/widgets/transaction/no_transaction_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-
 class TransactionList extends StatefulWidget {
   const TransactionList(
       {Key? key,
       this.mainScreenAnimationController,
       this.mainScreenAnimation,
       required this.address,
+      required this.type,
       this.onGoBack})
       : super(key: key);
 
@@ -22,6 +22,7 @@ class TransactionList extends StatefulWidget {
   final Animation<double>? mainScreenAnimation;
   final String address;
   final onGoBack;
+  final String type;
 
   @override
   _TransactionListState createState() => _TransactionListState();
@@ -53,16 +54,33 @@ class _TransactionListState extends State<TransactionList>
                   width: double.infinity,
                   // color: Colors.yellow,
                   child: FutureBuilder(
-                      future: Future.wait([
-                        Provider.of<DbProvider>(context).gettransactions(
-                            widget.address,
-                            Provider.of<AuthService>(context, listen: false)
-                                .loggedInUser
-                                .name), //Future that returns bool
-                        // _getAuthSession(), //Future that returns bool
-                        Provider.of<Web3EthProvider>(context, listen: false)
-                            .getEtherExchange()
-                      ]),
+                      future: (widget.type == "eth")
+                          ? Future.wait([
+                              Provider.of<DbProvider>(context).gettransactions(
+                                  widget.address,
+                                  Provider.of<AuthService>(context,
+                                          listen: false)
+                                      .loggedInUser
+                                      .name,
+                                  "ETH"), //Future that returns bool
+                              // _getAuthSession(), //Future that returns bool
+                              Provider.of<Web3EthProvider>(context,
+                                      listen: false)
+                                  .getEtherExchange()
+                            ])
+                          : Future.wait([
+                              Provider.of<DbProvider>(context).gettransactions(
+                                  widget.address,
+                                  Provider.of<AuthService>(context,
+                                          listen: false)
+                                      .loggedInUser
+                                      .name,
+                                  "SOL"), //Future that returns bool
+                              // _getAuthSession(), //Future that returns bool
+                              Provider.of<Web3SolProvider>(context,
+                                      listen: false)
+                                  .getSolExchange()
+                            ]),
                       builder: ((context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

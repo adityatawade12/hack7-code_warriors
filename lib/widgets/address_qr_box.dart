@@ -9,11 +9,13 @@ class AddressQrBox extends StatefulWidget {
       {Key? key,
       required this.address,
       this.animationController,
-      this.animation})
+      this.animation,
+      required this.type})
       : super(key: key);
   final AnimationController? animationController;
   final Animation<double>? animation;
   final String address;
+  final String type;
 
   @override
   State<AddressQrBox> createState() => _AddressQrBoxState();
@@ -34,7 +36,8 @@ class _AddressQrBoxState extends State<AddressQrBox> {
 
   @override
   void initState() {
-    _generateBarCode('{"mode":"address","value":"${widget.address}"}');
+    _generateBarCode(
+        '{"mode":"address","value":"${widget.address}","type":"${widget.type}"}');
     // _generateBarCode(widget.address); //innical value of scan result is "none"
     super.initState();
   }

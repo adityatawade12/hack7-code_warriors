@@ -36,8 +36,7 @@ class _CamScanScreenState extends State<CamScanScreen>
   Animation<double>? topBarAnimation;
   AnimationController? animationController;
   List<Widget> listViews = <Widget>[];
-  List<Widget> listViewsEmpty = <Widget>[];
-  List<Widget> listViewsFilled = <Widget>[];
+
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
   bool validVPA = true;
@@ -89,8 +88,8 @@ class _CamScanScreenState extends State<CamScanScreen>
       CamScanWidget(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: animationController!,
-            curve:
-                const Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: const Interval((1 / count) * 2, 1.0,
+                curve: Curves.fastOutSlowIn))),
         animationController: animationController!,
         onGoBack: onGoBack,
       ),
@@ -170,8 +169,7 @@ class _CamScanScreenState extends State<CamScanScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -263,20 +261,27 @@ class _CamScanWidgetState extends State<CamScanWidget> {
       var parsedJson = json.decode(cameraScanResult!);
       var vpa = "";
       if (parsedJson['mode'] == "vpa") {
-        var result = await Provider.of<DbProvider>(context, listen: false)
-            .getVPA(parsedJson['value']);
+        var result;
+        if (parsedJson['type'] == "eth") {
+          result = await Provider.of<DbProvider>(context, listen: false)
+              .getVPA(parsedJson['value'], "eth");
+        } else {
+          result = await Provider.of<DbProvider>(context, listen: false)
+              .getVPA(parsedJson['value'], "sol");
+        }
+
         address = result["address"]!;
         name = result["name"]!;
         vpa = parsedJson['value'];
       } else {
         address = parsedJson['value'];
         name = await Provider.of<DbProvider>(context, listen: false)
-            .getAccountname(address);
+            .getAccountname(address, parsedJson['type']);
         vpa = " ";
       }
 
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (ctx) => PayScreen(address, name, vpa)));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (ctx) => PayScreen(address, name, vpa, parsedJson['type'])));
     } on PlatformException catch (e) {
       print(e);
     }
@@ -284,6 +289,7 @@ class _CamScanWidgetState extends State<CamScanWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var _selectedType = "eth";
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -369,15 +375,65 @@ class _CamScanWidgetState extends State<CamScanWidget> {
                               hint: "Enter VPA",
                               icon: Icons.account_balance_wallet_rounded),
                         ),
+                        SizedBox(
+                          height: 70,
+                          width: 250,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedType = 'eth';
+                                  });
+                                },
+                                child: Container(
+                                  width: 80,
+                                  height: 50,
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                          value: 'eth',
+                                          groupValue: _selectedType,
+                                          onChanged: (value) {}),
+                                      Text("ETH"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedType = 'sol';
+                                  });
+                                },
+                                child: Container(
+                                  width: 80,
+                                  height: 50,
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                          value: 'sol',
+                                          groupValue: _selectedType,
+                                          onChanged: (value) {}),
+                                      Text("SOL"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         InkWell(
                           onTap: () async {
                             var dbs =
                                 Provider.of<DbProvider>(context, listen: false);
                             if (await dbs.checkVPAValidityForPayment(
-                                vpaController.text)) {
-                              var result = await Provider.of<DbProvider>(context,
-                                          listen: false)
-                                      .getVPA(vpaController.text);
+                                vpaController.text, _selectedType)) {
+                              var result = await Provider.of<DbProvider>(
+                                      context,
+                                      listen: false)
+                                  .getVPA(vpaController.text, _selectedType);
                               //  var address = ;
                               //   var name = result["name"]!;
                               //   var vpa = vpaController.text;
@@ -385,7 +441,8 @@ class _CamScanWidgetState extends State<CamScanWidget> {
                                   builder: (ctx) => PayScreen(
                                       result["address"]!,
                                       result["name"]!,
-                                      vpaController.text)));
+                                      vpaController.text,
+                                      _selectedType)));
                             } else {
                               setState(() {
                                 validVpa = false;

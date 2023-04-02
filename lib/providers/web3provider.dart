@@ -122,9 +122,6 @@ class Web3EthProvider with ChangeNotifier {
       }
     }
 
-    // print(it);
-    // var items = accounts.values.toList().reversed.toList();
-    // accounts.close();
     _accounts = items;
 
     notifyListeners();
@@ -148,7 +145,8 @@ class Web3EthProvider with ChangeNotifier {
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       print(extractedData);
       rupee = extractedData['ethereum']!['inr'];
-
+      print("www");
+      print(rupee);
       return {
         "rupee": (rupee * balance.getValueInUnit(EtherUnit.ether)).floor(),
         "ether": balance.getValueInUnit(EtherUnit.ether)

@@ -5,10 +5,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hack7/firebase_options.dart';
+import 'package:hack7/models/account.dart';
 import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/fbdbprovider.dart';
 import 'package:hack7/screens/accounts/add_accounts_screen.dart';
+import 'package:hack7/screens/accounts/create_new_account.dart';
+import 'package:hack7/screens/accounts/import_account_screen.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
+import 'package:hack7/screens/payment/request_pay_create.dart';
+import 'package:hack7/screens/payment/scanner.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
 import 'package:hack7/screens/splash_screen.dart';
 import 'package:hack7/screens/auth/login_screen.dart';
@@ -30,6 +35,7 @@ void main() async {
   Pushy.listen();
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.initFlutter(directory.path);
+  Hive.registerAdapter(AccountAdapter());
   runApp(const MyApp());
 }
 
@@ -73,7 +79,11 @@ class MyApp extends StatelessWidget {
             PrimaryAccountScreen.routename: (ctx) =>
                 const PrimaryAccountScreen(),
             HomeScreen.routename: (ctx) => const HomeScreen(),
-            AddAccountScreen.routename: (ctx) => const AddAccountScreen()
+            AddAccountScreen.routename: (ctx) => const AddAccountScreen(),
+            CreateAccountScreen.routename: (ctx) => CreateAccountScreen(),
+            ImportAccountScreen.routename: (ctx) => ImportAccountScreen(),
+            CreatePayRequestScreen.routename: (ctx) => CreatePayRequestScreen(),
+            CamScanScreen.routename: (ctx) => CamScanScreen()
           },
         ));
   }

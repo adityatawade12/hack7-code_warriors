@@ -1,16 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/screens/accounts/add_accounts_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/themes/homeapptheme.dart';
+import 'package:hack7/widgets/account/account_tile_list.dart';
 import 'package:hack7/widgets/account/add_account_widget.dart';
 
 class AccountListScreen extends StatefulWidget {
-  static const routename = '/addAccount';
+  static const routename = '/accountlistscreen';
+  final String type;
 
-  const AccountListScreen({
-    Key? key,
-  }) : super(key: key);
+  const AccountListScreen({Key? key, required this.type}) : super(key: key);
 
   @override
   _AccountListScreenState createState() => _AccountListScreenState();
@@ -68,16 +69,26 @@ class _AccountListScreenState extends State<AccountListScreen>
       height: 100,
     ));
 
-    listViews.add(
-      AddAccountWidget(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: animationController!,
-            curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: animationController!,
-        onGoBack: onGoBack,
-      ),
-    );
+    // listViews.add(
+    //   AddAccountWidget(
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: animationController!,
+    //         curve:
+    //             Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: animationController!,
+    //     onGoBack: onGoBack,
+    //   ),
+    // );
+
+    listViews.add(AccountTileList(
+      animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+          parent: animationController!,
+          curve:
+              const Interval((1 / 10) * 7, 1.0, curve: Curves.fastOutSlowIn))),
+      animationController: animationController!,
+      onGoBack: onGoBack,
+      type: widget.type,
+    ));
   }
 
   Future<bool> getData() async {
@@ -189,7 +200,7 @@ class _AccountListScreenState extends State<AccountListScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Add Account',
+                                  'Accounts',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: HomeAppTheme.fontName,
@@ -201,6 +212,19 @@ class _AccountListScreenState extends State<AccountListScreen>
                                 ),
                               ),
                             ),
+                            IconButton(
+                                onPressed: (() {
+                                  animationController!.reverse().then((value) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AddAccountScreen.routename,
+                                    ).then(onGoBack);
+                                  });
+                                }),
+                                icon: Icon(
+                                  Icons.add,
+                                  size: 25,
+                                )),
                           ],
                         ),
                       )

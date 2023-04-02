@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hack7/main.dart';
 import 'package:hack7/providers/authprovider.dart';
@@ -12,7 +11,6 @@ import 'package:hack7/widgets/key_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'package:intl/intl.dart';
-
 
 class Passbook extends StatefulWidget {
   const Passbook({Key? key}) : super(key: key);
@@ -90,7 +88,8 @@ class _PassbookState extends State<Passbook> {
                         args['address']!,
                         Provider.of<AuthService>(context, listen: false)
                             .loggedInUser
-                            .name), //Future that returns bool
+                            .name,
+                        "ETH"), //Future that returns bool
                     // _getAuthSession(), //Future that returns bool
                     Provider.of<Web3EthProvider>(context, listen: false)
                         .getEtherExchange()
@@ -109,8 +108,8 @@ class _PassbookState extends State<Passbook> {
                           itemBuilder: (ctx, i) {
                             return InkWell(
                               onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(TransactionDetailScreen.routename);
+                                Navigator.of(context).pushNamed(
+                                    TransactionDetailScreen.routename);
                               },
                               child: Card(
                                 margin: const EdgeInsets.symmetric(

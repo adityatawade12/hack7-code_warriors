@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/fbdbprovider.dart';
@@ -81,7 +80,7 @@ class _RequestListState extends State<RequestList>
                                       var name = await Provider.of<DbProvider>(
                                               context,
                                               listen: false)
-                                          .getAccountname(address);
+                                          .getAccountname(address, 'eth');
                                       print("===================");
                                       print(address);
                                       print(name);

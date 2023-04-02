@@ -26,22 +26,25 @@ class DbProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, String>> getVPA(String vpa) async {
+  Future<Map<String, String>> getVPA(String vpa, String type) async {
     var status =
         await firestore.collection('users').where("vpa", isEqualTo: vpa).get();
     var data = status.docs[0].data() as Map<String, dynamic>;
 
     return {
-      "address": status.docs[0].data()['primaryAccount'],
+      "address": (type == "eth")
+          ? status.docs[0].data()['primaryAccountEth']
+          : status.docs[0].data()['primaryAccountSol'],
       "name": status.docs[0].data()['name']
     };
   }
 
-  Future<List> gettransactions(String acc, String name) async {
+  Future<List> gettransactions(String acc, String name, String type) async {
     // print('gettransLol' + acc);
     var sent = await firestore
         .collection('transactions')
         .where("sender", isEqualTo: acc)
+        .where("currency", isEqualTo: type)
         .get();
 
     var recvd = await firestore
@@ -55,6 +58,7 @@ class DbProvider with ChangeNotifier {
       data.add(element.data() as Map<String, dynamic>);
       otherAcc.add(element['receiver']);
     });
+    otherAcc.add('');
     recvd.docs.forEach((element) {
       data.add(element.data() as Map<String, dynamic>);
       otherAcc.add(element['sender']);
@@ -64,7 +68,7 @@ class DbProvider with ChangeNotifier {
 
     final accountNames = await firestore
         .collection('users')
-        .where("accounts", arrayContainsAny: otherAcc)
+        .where(type.toLowerCase(), arrayContainsAny: otherAcc)
         .get();
 
     var c = 0;
@@ -80,7 +84,7 @@ class DbProvider with ChangeNotifier {
         for (var e1 in accountNames.docs) {
           var e = e1.data();
 
-          if (e['accounts'].contains(element['receiver'])) {
+          if (e[type].contains(element['receiver'])) {
             element['receiverName'] = e['name'];
           }
         }
@@ -91,7 +95,7 @@ class DbProvider with ChangeNotifier {
         for (var e1 in accountNames.docs) {
           var e = e1.data();
 
-          if (e['accounts'].contains(element['sender'])) {
+          if (e[type].contains(element['sender'])) {
             element['senderName'] = e['name'];
           }
         }
@@ -108,11 +112,12 @@ class DbProvider with ChangeNotifier {
     return data;
   }
 
-  Future checkVPAValidityForPayment(vpa) async {
+  Future checkVPAValidityForPayment(vpa, type) async {
     var status = await firestore
         .collection('users')
         .where("vpa", isEqualTo: vpa)
-        .where("primaryAccount", isNotEqualTo: "")
+        .where((type == "eth") ? "primaryAccountEth" : "primaryAccountSol",
+            isNotEqualTo: "")
         .get();
     // print(status.docs.length);
     if (status.docs.length > 0) {
@@ -121,10 +126,10 @@ class DbProvider with ChangeNotifier {
     return false;
   }
 
-  Future getAccountname(address) async {
+  Future getAccountname(address, type) async {
     var doc = await firestore
         .collection('users')
-        .where("accounts", arrayContainsAny: [address]).get();
+        .where(type, arrayContainsAny: [address]).get();
     if (doc.docs.length == 0) {
       return "Unregistered User";
     }

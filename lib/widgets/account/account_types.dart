@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hack7/providers/web3provider.dart';
+import 'package:hack7/screens/accounts/account_list_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 
@@ -48,91 +49,117 @@ class _AccountTypesState extends State<AccountTypes> {
                             crossAxisSpacing: 4.0,
                             mainAxisSpacing: 4.0),
                         children: [
-                          Container(
-                            height: 120,
-                            width: 120,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: AppTheme.white,
-                              // ignore: prefer_const_constructors
-                              borderRadius: BorderRadius.only(
-                                  topLeft: const Radius.circular(8.0),
-                                  bottomLeft: const Radius.circular(8.0),
-                                  bottomRight: const Radius.circular(8.0),
-                                  topRight: const Radius.circular(8.0)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: AppTheme.grey.withOpacity(0.2),
-                                    offset: const Offset(1.1, 1.1),
-                                    blurRadius: 10.0),
-                              ],
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    "https://cdn-icons-png.flaticon.com/512/8193/8193845.png",
-                                    height: 70,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      "Solana",
-                                      style: TextStyle(
-                                        fontFamily: AppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 18,
-                                        letterSpacing: 0.5,
-                                        color: AppTheme.lightText,
-                                      ),
-                                    ),
-                                  )
+                          InkWell(
+                            onTap: () {
+                              widget.animationController!
+                                  .reverse()
+                                  .then((value) {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (ctx) =>
+                                            AccountListScreen(type: "sol")))
+                                    .then(widget.onGoBack);
+                              });
+                            },
+                            child: Container(
+                              height: 120,
+                              width: 120,
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: AppTheme.white,
+                                // ignore: prefer_const_constructors
+                                borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(8.0),
+                                    bottomLeft: const Radius.circular(8.0),
+                                    bottomRight: const Radius.circular(8.0),
+                                    topRight: const Radius.circular(8.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                      color: AppTheme.grey.withOpacity(0.2),
+                                      offset: const Offset(1.1, 1.1),
+                                      blurRadius: 10.0),
                                 ],
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      "https://cdn-icons-png.flaticon.com/512/8193/8193845.png",
+                                      height: 70,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: Text(
+                                        "Solana",
+                                        style: TextStyle(
+                                          fontFamily: AppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                          letterSpacing: 0.5,
+                                          color: AppTheme.lightText,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Container(
-                            height: 120,
-                            width: 120,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: AppTheme.white,
-                              // ignore: prefer_const_constructors
-                              borderRadius: BorderRadius.only(
-                                  topLeft: const Radius.circular(8.0),
-                                  bottomLeft: const Radius.circular(8.0),
-                                  bottomRight: const Radius.circular(8.0),
-                                  topRight: const Radius.circular(8.0)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: AppTheme.grey.withOpacity(0.2),
-                                    offset: const Offset(1.1, 1.1),
-                                    blurRadius: 10.0),
-                              ],
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    "https://cdn-icons-png.flaticon.com/512/7016/7016523.png",
-                                    height: 70,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      "Ethereum",
-                                      style: TextStyle(
-                                        fontFamily: AppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 18,
-                                        letterSpacing: 0.5,
-                                        color: AppTheme.lightText,
-                                      ),
-                                    ),
-                                  )
+                          InkWell(
+                            onTap: () {
+                              widget.animationController!
+                                  .reverse()
+                                  .then((value) {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (ctx) =>
+                                            AccountListScreen(type: "eth")))
+                                    .then(widget.onGoBack);
+                              });
+                            },
+                            child: Container(
+                              height: 120,
+                              width: 120,
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: AppTheme.white,
+                                // ignore: prefer_const_constructors
+                                borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(8.0),
+                                    bottomLeft: const Radius.circular(8.0),
+                                    bottomRight: const Radius.circular(8.0),
+                                    topRight: const Radius.circular(8.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                      color: AppTheme.grey.withOpacity(0.2),
+                                      offset: const Offset(1.1, 1.1),
+                                      blurRadius: 10.0),
                                 ],
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      "https://cdn-icons-png.flaticon.com/512/7016/7016523.png",
+                                      height: 70,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: Text(
+                                        "Ethereum",
+                                        style: TextStyle(
+                                          fontFamily: AppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                          letterSpacing: 0.5,
+                                          color: AppTheme.lightText,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

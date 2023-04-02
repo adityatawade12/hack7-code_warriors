@@ -13,7 +13,6 @@ import 'package:hack7/widgets/app_text_field.dart';
 import 'package:hack7/widgets/gradientIcon.dart';
 import 'package:provider/provider.dart';
 
-
 class CreatePayRequestScreen extends StatefulWidget {
   const CreatePayRequestScreen({Key? key}) : super(key: key);
   static const routename = '/createPayRequest';
@@ -27,8 +26,7 @@ class _CreatePayRequestScreenState extends State<CreatePayRequestScreen>
   Animation<double>? topBarAnimation;
   AnimationController? animationController;
   List<Widget> listViews = <Widget>[];
-  List<Widget> listViewsEmpty = <Widget>[];
-  List<Widget> listViewsFilled = <Widget>[];
+
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
@@ -194,8 +192,7 @@ class _CreatePayRequestScreenState extends State<CreatePayRequestScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -257,7 +254,8 @@ class _CreatePayRequestScreenState extends State<CreatePayRequestScreen>
 }
 
 class CreatePayRequestWidget extends StatefulWidget {
-  const CreatePayRequestWidget({Key? key, this.animationController, this.animation})
+  const CreatePayRequestWidget(
+      {Key? key, this.animationController, this.animation})
       : super(key: key);
   final AnimationController? animationController;
   final Animation<double>? animation;
@@ -273,7 +271,7 @@ class _CreatePayRequestWidgetState extends State<CreatePayRequestWidget> {
   final pin2Controller = TextEditingController();
   final payController = TextEditingController();
   bool validVpa = true;
-
+  String _selectedType = "eth";
   @override
   Widget build(BuildContext context) {
     Web3EthProvider web3 = Web3EthProvider();
@@ -363,6 +361,55 @@ class _CreatePayRequestWidgetState extends State<CreatePayRequestWidget> {
                           const SizedBox(
                             height: 10,
                           ),
+                          SizedBox(
+                            height: 70,
+                            width: 250,
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedType = 'eth';
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 80,
+                                    height: 50,
+                                    child: Row(
+                                      children: [
+                                        Radio(
+                                            value: 'eth',
+                                            groupValue: _selectedType,
+                                            onChanged: (value) {}),
+                                        Text("ETH"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedType = 'sol';
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 80,
+                                    height: 50,
+                                    child: Row(
+                                      children: [
+                                        Radio(
+                                            value: 'sol',
+                                            groupValue: _selectedType,
+                                            onChanged: (value) {}),
+                                        Text("SOL"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           validVpa
                               ? SizedBox(
                                   height: 16,
@@ -400,7 +447,7 @@ class _CreatePayRequestWidgetState extends State<CreatePayRequestWidget> {
                                   var dbs = Provider.of<DbProvider>(context,
                                       listen: false);
                                   if (await dbs.checkVPAValidityForPayment(
-                                      vpaController.text)) {
+                                      vpaController.text, _selectedType)) {
                                     /* await Provider.of<Web3EthProvider>(context,
                                             listen: false)
                                         .createPaymentRequest(

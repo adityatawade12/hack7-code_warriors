@@ -4,16 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:hack7/models/account.dart';
 import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_dialog.dart';
 import 'package:hack7/widgets/app_text_field.dart';
 import 'package:hack7/widgets/gradientIcon.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 import 'package:qrscan/qrscan.dart' as scanner;
-
-
 
 class ImportAccountScreen extends StatefulWidget {
   ImportAccountScreen({Key? key}) : super(key: key);
@@ -182,8 +182,7 @@ class _ImportAccountScreenState extends State<ImportAccountScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -259,6 +258,7 @@ class _ImportAccountWidgetState extends State<ImportAccountWidget> {
   final pin1Controller = TextEditingController();
   final pin2Controller = TextEditingController();
   final pkController = TextEditingController();
+  String _selectedType = "eth";
 
   Future _scanQR() async {
     try {
@@ -301,7 +301,7 @@ class _ImportAccountWidgetState extends State<ImportAccountWidget> {
                                     Center(
                                         child: GradientIcon(
                                       Icons.import_export_rounded,
-                                      90.0,
+                                      80.0,
                                       const LinearGradient(
                                         colors: [
                                           AppTheme.mainBlue,
@@ -433,7 +433,59 @@ class _ImportAccountWidgetState extends State<ImportAccountWidget> {
                                       },
                                     ),
                                     const SizedBox(
-                                      height: 30,
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 70,
+                                      width: 250,
+                                      child: Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                _selectedType = 'eth';
+                                              });
+                                            },
+                                            child: Container(
+                                              width: 80,
+                                              height: 50,
+                                              child: Row(
+                                                children: [
+                                                  Radio(
+                                                      value: 'eth',
+                                                      groupValue: _selectedType,
+                                                      onChanged: (value) {}),
+                                                  Text("ETH"),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                _selectedType = 'sol';
+                                              });
+                                            },
+                                            child: Container(
+                                              width: 80,
+                                              height: 50,
+                                              child: Row(
+                                                children: [
+                                                  Radio(
+                                                      value: 'sol',
+                                                      groupValue: _selectedType,
+                                                      onChanged: (value) {}),
+                                                  Text("SOL"),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
                                     ),
                                     ElevatedButton(
                                         style: ButtonStyle(
@@ -449,12 +501,31 @@ class _ImportAccountWidgetState extends State<ImportAccountWidget> {
                                         onPressed: () async {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            var accountData =
-                                                await web3.importAccount(
-                                                    nameController.text,
-                                                    pin1Controller.text,
-                                                    pkController.text,
-                                                    "eth");
+                                            var accountData;
+                                            if (_selectedType == "eth") {
+                                              accountData = await Provider.of<
+                                                      Web3EthProvider>(context)
+                                                  .importAccount(
+                                                      nameController.text,
+                                                      pin1Controller.text,
+                                                      pkController.text,
+                                                      "eth");
+                                            } else {
+                                              accountData =
+                                                  Provider.of<Web3SolProvider>(
+                                                          context)
+                                                      .importAccount(
+                                                          nameController.text,
+                                                          pin1Controller.text,
+                                                          pkController.text,
+                                                          "sol");
+                                            }
+                                            // var accountData =
+                                            //     await web3.importAccount(
+                                            //         nameController.text,
+                                            //         pin1Controller.text,
+                                            //         pkController.text,
+                                            //         "eth");
                                             showDialog(
                                                 context: context,
                                                 builder: (ctx) => AccountDialog(

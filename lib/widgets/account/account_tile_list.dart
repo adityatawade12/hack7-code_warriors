@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hack7/providers/web3provider.dart';
+import 'package:hack7/screens/accounts/passbook_transacton_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
+import 'package:hack7/widgets/account/account_tile.dart';
 import 'package:provider/provider.dart';
 
 class AccountTileList extends StatefulWidget {
+  final String type;
   const AccountTileList(
       {Key? key,
       this.animationController,
       this.animation,
-      required this.onGoBack})
+      required this.onGoBack,
+      required this.type})
       : super(key: key);
 
   final AnimationController? animationController;
@@ -22,7 +26,14 @@ class AccountTileList extends StatefulWidget {
 class _AccountTileListState extends State<AccountTileList> {
   @override
   Widget build(BuildContext context) {
-    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3;
+    if (widget.type == "eth") {
+      print("eth");
+      web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    } else {
+      print("sol");
+      web3 = Provider.of<Web3SolProvider>(context, listen: false);
+    }
 
     return AnimatedBuilder(
       animation: widget.animationController!,
@@ -104,14 +115,55 @@ class _AccountTileListState extends State<AccountTileList> {
                             ),
                           );
                         }
+                        return ListView.builder(
+                          // controller: scrollController,
+                          padding: EdgeInsets.only(
+                            // top: AppBar().preferredSize.height +
+                            //     MediaQuery.of(context).padding.top +
+                            //     24,
+                            bottom: 110 + MediaQuery.of(context).padding.bottom,
+                          ),
+                          itemCount: web3.storedAccounts.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (ctx, int index) {
+                            widget.animationController?.forward();
+                            return InkWell(
+                              onTap: (() {
+                                widget.animationController!
+                                    .reverse()
+                                    .then((value) {
+                                  print("lol");
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              PassBookAndTransactionScreen(
+                                                address: web3
+                                                    .storedAccounts[index]
+                                                    .accountAddress,
+                                                name: web3
+                                                    .storedAccounts[index].name,
+                                                type: widget.type,
+                                              )))
+                                      .then(widget.onGoBack);
+                                });
+                              }),
+                              child: AccountTile(
+                                accountName: web3.storedAccounts[index].name,
+                                accountAddress:
+                                    web3.storedAccounts[index].accountAddress,
+                                animation: widget.animation,
+                                animationController: widget.animationController,
+                              ),
+                            );
+                          },
+                        );
                         return const SizedBox(
                           height: 0,
                         );
                       }
                     },
                   ),
-                )
-              ),
+                )),
           ),
         );
       },

@@ -98,6 +98,7 @@ class _AddAccountScreenState extends State<AddAccountScreen>
 
   @override
   Widget build(BuildContext context) {
+    // final arguments = (ModalRoute.of(context)?.settings.arguments) as String;
     print("loading page");
     return
         // Container(

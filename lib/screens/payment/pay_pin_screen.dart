@@ -4,15 +4,16 @@ import 'package:hack7/themes/apptheme.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
-
 class PayPinScreen extends StatefulWidget {
   final String senderAddress;
   final String recvAddress;
   final int payingAmountRupee;
   final int extra;
+  final String type;
 
-  const PayPinScreen(
-      this.senderAddress, this.recvAddress, this.payingAmountRupee, this.extra, {super.key});
+  const PayPinScreen(this.senderAddress, this.recvAddress,
+      this.payingAmountRupee, this.extra, this.type,
+      {super.key});
 
   @override
   State<PayPinScreen> createState() => _PayPinScreenState();
@@ -26,7 +27,13 @@ class _PayPinScreenState extends State<PayPinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    var web3;
+    if (widget.type == "sol") {
+      web3 = Provider.of<Web3SolProvider>(context, listen: false);
+    } else {
+      web3 = Provider.of<Web3EthProvider>(context, listen: false);
+    }
+    // var web3 = Provider.of<Web3EthProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -175,7 +182,8 @@ class _PayPinScreenState extends State<PayPinScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Column(
                     children: [
                       Row(
@@ -187,8 +195,8 @@ class _PayPinScreenState extends State<PayPinScreen> {
                                   TextStyle(fontSize: 18, color: Colors.white)),
                           Text("\u{20B9}${widget.payingAmountRupee}",
                               textAlign: TextAlign.left,
-                              style:
-                                  const TextStyle(fontSize: 18, color: Colors.white)),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white)),
                         ],
                       ),
                       const SizedBox(
@@ -203,8 +211,8 @@ class _PayPinScreenState extends State<PayPinScreen> {
                                   TextStyle(fontSize: 18, color: Colors.white)),
                           Text("\u{20B9}${widget.extra}",
                               textAlign: TextAlign.left,
-                              style:
-                                  const TextStyle(fontSize: 18, color: Colors.white)),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white)),
                         ],
                       ),
                       const SizedBox(

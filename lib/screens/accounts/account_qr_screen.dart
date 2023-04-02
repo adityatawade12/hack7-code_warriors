@@ -6,15 +6,16 @@ import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/address_qr_box.dart';
 import 'package:provider/provider.dart';
 
-
 class AccountQrScreen extends StatefulWidget {
   static const routename = "/pnt";
   final String address;
   final String name;
+  final String type;
   const AccountQrScreen({
     Key? key,
     required this.address,
     required this.name,
+    required this.type,
   }) : super(key: key);
 
   @override
@@ -37,7 +38,11 @@ class _AccountQrScreenState extends State<AccountQrScreen>
         duration: const Duration(milliseconds: 1000), vsync: this);
     // final args =
     //     ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-    final args = {"address": widget.address, "name": widget.name};
+    final args = {
+      "address": widget.address,
+      "name": widget.name,
+      "type": widget.type
+    };
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: animationController!,
@@ -80,13 +85,14 @@ class _AccountQrScreenState extends State<AccountQrScreen>
 
     listViews.add(
       AddressQrBox(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: animationController!,
-            curve:
-                const Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: animationController!,
-        address: args['address'],
-      ),
+          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+              CurvedAnimation(
+                  parent: animationController!,
+                  curve: const Interval((1 / count) * 2, 1.0,
+                      curve: Curves.fastOutSlowIn))),
+          animationController: animationController!,
+          address: args['address'],
+          type: args["type"]),
     );
   }
 
@@ -192,8 +198,7 @@ class _AccountQrScreenState extends State<AccountQrScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
