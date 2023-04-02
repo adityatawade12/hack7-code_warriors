@@ -232,47 +232,47 @@
     },
     {
         "name":"November",
-        "income":"0",
-        "expenditure":"0",
-        "ethereum":"0",
-        "solana":"0",
-        "kjh":"0",
+        "income":"15000",
+        "expenditure":"7500",
+        "ethereum":"4500",
+        "solana":"2000",
+        "kjh":"1000",
         "categories":
         [
             {
                 "name" : "groceries",
-                "amount" : "0"
+                "amount" : "4500"
             },
             {
                 "name" : "entertainment",
-                "amount" : "0"
+                "amount" : "2000"
             },
             {
                 "name" : "travel",
-                "amount" : "0"
+                "amount" : "1000"
             }
         ]
     },
     {
         "name":"December",
-        "income":"0",
-        "expenditure":"0",
-        "ethereum":"0",
-        "solana":"0",
-        "kjh":"0",
+        "income":"13000",
+        "expenditure":"10000",
+        "ethereum":"5000",
+        "solana":"3000",
+        "kjh":"2000",
         "categories":
         [
             {
                 "name" : "groceries",
-                "amount" : "0"
+                "amount" : "6000"
             },
             {
                 "name" : "entertainment",
-                "amount" : "0"
+                "amount" : "2000"
             },
             {
                 "name" : "travel",
-                "amount" : "0"
+                "amount" : "2000"
             }
         ]
     }
