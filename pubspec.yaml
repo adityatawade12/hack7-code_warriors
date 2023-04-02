@@ -27,7 +27,7 @@ dependencies:
   web3dart: ^2.3.5
   tuple: ^2.0.1
   crypto: ^3.0.2
-  http: ^0.13.4
+  http: ^0.13.5
   dio: ^4.0.6
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.4
@@ -41,6 +41,7 @@ dependencies:
   solana_web3: ^0.0.8
   infinite_carousel: ^1.0.2
   banner_carousel: ^1.2.1
+  web_socket_channel: ^2.3.0
 
 dev_dependencies:
   flutter_test:
