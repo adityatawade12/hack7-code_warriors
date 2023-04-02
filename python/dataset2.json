@@ -1,0 +1,280 @@
+{
+    "month":[
+    {
+        "name":"January",
+        "income":"10000",
+        "expenditure":"5000",
+        "ethereum":"2000",
+        "solana":"1000",
+        "kjh":"2000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "2500"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "500"
+            }
+        ]
+    },
+    {
+        "name":"February",
+        "income":"15000",
+        "expenditure":"7000",
+        "ethereum":"3400",
+        "solana":"1600",
+        "kjh":"3000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "4000"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1000"
+            }
+        ]
+    },
+    {
+        "name":"March",
+        "income":"14000",
+        "expenditure":"8000",
+        "ethereum":"4750",
+        "solana":"1560",
+        "kjh":"1690",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "4500"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2500"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1000"
+            }
+        ]
+    },
+    {
+        "name":"April",
+        "income":"14500",
+        "expenditure":"12000",
+        "ethereum":"4000",
+        "solana":"1000",
+        "kjh":"7000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "8000"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "2000"
+            }
+        ]
+    },
+    {
+        "name":"May",
+        "income":"15000",
+        "expenditure":"6500",
+        "ethereum":"2000",
+        "solana":"2000",
+        "kjh":"2500",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "1500"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "4000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "500"
+            }
+        ]
+    },
+    {
+        "name":"June",
+        "income":"10000",
+        "expenditure":"5000",
+        "ethereum":"1500",
+        "solana":"1750",
+        "kjh":"1750",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "2500"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "1500"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1000"
+            }
+        ]
+    },
+    {
+        "name":"July",
+        "income":"9500",
+        "expenditure":"6000",
+        "ethereum":"2000",
+        "solana":"2000",
+        "kjh":"2000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "3000"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1000"
+            }
+        ]
+    },
+    {
+        "name":"August",
+        "income":"14000",
+        "expenditure":"7000",
+        "ethereum":"500",
+        "solana":"2650",
+        "kjh":"3850",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "4000"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1000"
+            }
+        ]
+    },
+    {
+        "name":"September",
+        "income":"14000",
+        "expenditure":"8000",
+        "ethereum":"3500",
+        "solana":"3000",
+        "kjh":"1500",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "3070"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "3500"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1430"
+            }
+        ]
+    },
+    {
+        "name":"October",
+        "income":"15000",
+        "expenditure":"7000",
+        "ethereum":"2000",
+        "solana":"2000",
+        "kjh":"3000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "2500"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "2500"
+            }
+        ]
+    },
+    {
+        "name":"November",
+        "income":"15000",
+        "expenditure":"7500",
+        "ethereum":"4500",
+        "solana":"2000",
+        "kjh":"1000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "4500"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "1000"
+            }
+        ]
+    },
+    {
+        "name":"December",
+        "income":"13000",
+        "expenditure":"10000",
+        "ethereum":"5000",
+        "solana":"3000",
+        "kjh":"2000",
+        "categories":
+        [
+            {
+                "name" : "groceries",
+                "amount" : "6000"
+            },
+            {
+                "name" : "entertainment",
+                "amount" : "2000"
+            },
+            {
+                "name" : "travel",
+                "amount" : "2000"
+            }
+        ]
+    }
+]
+}
