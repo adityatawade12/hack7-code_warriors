@@ -9,6 +9,63 @@ const Withdraw = () => {
 	const [accBalance, setaccBalance] = useState(0.004);
 	const [effAccBalance, setEffAccBalance] = useState(0.004);
 
+		const [web3, setweb3] = useState(null);
+	const [account, setaccount] = useState('');
+	const [token, settoken] = useState(null);
+	const [dbank, setdbank] = useState(null);
+	const [balance, setbalance] = useState(0);
+	const [borrowAmount, setborrowAmount] = useState(0);
+	const [dBankAddress, setdBankAddress] = useState(null);
+
+	
+    const initializeEth = () => {
+        if(window.ethereum){
+            // Do something 
+            window.ethereum.request({method:'eth_requestAccounts'})
+            .then(async (res)=>{
+                // Return the address of the wallet
+                console.log(res)
+                setweb3(new Web3(window.ethereum));
+				if (res[0] !== null) {
+					setaccount(res[0])
+				}
+				else {
+					window.alert('Please login with metamask')
+				}
+            })
+        }else{
+            alert("install metamask extension!!")
+        }
+    }
+
+    useEffect(()=> {
+		if (web3 != null) {
+			console.log("acc:", account, ",  web3:", web3);
+			const bal = web3.eth.getBalance(account);
+			setbalance(bal);
+	
+			try {
+				const netId = web3.eth.net.getId();
+				const tk = new web3.eth.Contract(tokenABI.abi, tokenABI.networks[netId].address)
+				const dbk = new web3.eth.Contract(bankABI.abi, bankABI.networks[netId].address)
+				const dbkAdd = bankABI.networks[netId].address
+				settoken(tk);
+				setdbank(dbk);
+				setdBankAddress(dbkAdd);
+			}
+			catch (e) {
+				console.log('Error', e)
+				window.alert('Contracts not deployed to the current network')
+			}
+		}
+    }, [web3]);
+
+    useEffect(()=> {
+        if (isBrowser()) {
+            initializeEth();
+        }
+    }, []);
+
 	useEffect(()=> {
 		setEffAccBalance(accBalance - amount);
 	}, [amount]);

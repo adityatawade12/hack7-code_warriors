@@ -18,8 +18,12 @@ const Login = () => {
             "email": email,
             "password": password
         }
-        console.log("Data:", data);
-        router.push("/home");
+        if (email.equals("a@gmail.com") && password.equals("abcd1234")) {
+            console.log("Data:", data);
+            router.push("/home");
+        } else {
+            alert("Wrong Credentials.");
+        }
     }
 
     return <>

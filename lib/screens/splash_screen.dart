@@ -19,17 +19,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     var auth = Provider.of<AuthService>(context, listen: false);
 
     if (auth.currentUser == 0) {
-      Timer(Duration(seconds: 4),
+      Timer(const Duration(seconds: 4),
           () => Navigator.pushReplacementNamed(context, LoginScreen.routename));
     } else {
       auth.getUserData().then((value) async {
         Timer(
-            Duration(seconds: 1),
+            const Duration(seconds: 1),
             () =>
                 Navigator.pushReplacementNamed(context, HomeScreen.routename));
       });
@@ -44,19 +43,19 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Spacer(),
-          Spacer(),
-          Container(
+          const Spacer(),
+          const Spacer(),
+          SizedBox(
             height: 80,
             width: 80,
             child: Image.asset("assets/images/logo.png"),
           ),
-          Spacer(),
-          Text(
+          const Spacer(),
+          const Text(
             "BitFinance",
             style: TextStyle(fontSize: 25),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     ));
