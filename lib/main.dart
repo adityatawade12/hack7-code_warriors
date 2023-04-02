@@ -12,6 +12,7 @@ import 'package:hack7/screens/accounts/add_accounts_screen.dart';
 import 'package:hack7/screens/accounts/create_new_account.dart';
 import 'package:hack7/screens/accounts/import_account_screen.dart';
 import 'package:hack7/screens/accounts/primary_account_screen.dart';
+import 'package:hack7/screens/payment/payment_requests_screen.dart';
 import 'package:hack7/screens/payment/request_pay_create.dart';
 import 'package:hack7/screens/payment/scanner.dart';
 import 'package:hack7/screens/profile/edit_profile.dart';
@@ -31,8 +32,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  String deviceToken = await Pushy.register();
-  Pushy.listen();
+  // String deviceToken = await Pushy.register();
+  // Pushy.listen();
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.initFlutter(directory.path);
   Hive.registerAdapter(AccountAdapter());
@@ -83,7 +84,8 @@ class MyApp extends StatelessWidget {
             CreateAccountScreen.routename: (ctx) => CreateAccountScreen(),
             ImportAccountScreen.routename: (ctx) => ImportAccountScreen(),
             CreatePayRequestScreen.routename: (ctx) => CreatePayRequestScreen(),
-            CamScanScreen.routename: (ctx) => CamScanScreen()
+            CamScanScreen.routename: (ctx) => CamScanScreen(),
+            PaymentRequestScreen.routename: (ctx) => PaymentRequestScreen()
           },
         ));
   }

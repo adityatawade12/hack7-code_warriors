@@ -22,16 +22,22 @@ class AccountBalanceBox extends StatefulWidget {
 }
 
 class _AccountBalanceState extends State<AccountBalanceBox> {
+  var web3;
   var _switchState = false;
   @override
-  Widget build(BuildContext context) {
-    var web3;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
     if (widget.type == "eth") {
       web3 = Provider.of<Web3EthProvider>(context, listen: false);
     } else {
       web3 = Provider.of<Web3SolProvider>(context, listen: false);
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {

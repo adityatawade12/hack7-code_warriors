@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/providers/web3provider.dart';
+import 'package:hack7/screens/payment/payment_requests_screen.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_header.dart';
 import 'package:hack7/widgets/account/account_tile_list.dart';
@@ -249,12 +250,14 @@ class _AccountScreenState extends State<AccountScreen>
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                      // widget.animationController!
-                                      //     .reverse()
-                                      //     .then((value) {
-                                      //   // Navigator.of(context).pushNamed(
-                                      //   //     PaymentRequestScreen.routename);
-                                      // });
+                                      widget.animationController!
+                                          .reverse()
+                                          .then((value) {
+                                        Navigator.of(context)
+                                            .pushNamed(
+                                                PaymentRequestScreen.routename)
+                                            .then(onGoBack);
+                                      });
                                     },
                                     icon: const Icon(
                                       Icons.request_quote_outlined,

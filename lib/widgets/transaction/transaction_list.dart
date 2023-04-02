@@ -56,13 +56,14 @@ class _TransactionListState extends State<TransactionList>
                   child: FutureBuilder(
                       future: (widget.type == "eth")
                           ? Future.wait([
-                              Provider.of<DbProvider>(context).gettransactions(
-                                  widget.address,
-                                  Provider.of<AuthService>(context,
-                                          listen: false)
-                                      .loggedInUser
-                                      .name,
-                                  "ETH"), //Future that returns bool
+                              Provider.of<DbProvider>(context, listen: false)
+                                  .gettransactions(
+                                      widget.address,
+                                      Provider.of<AuthService>(context,
+                                              listen: false)
+                                          .loggedInUser
+                                          .name,
+                                      "ETH"), //Future that returns bool
                               // _getAuthSession(), //Future that returns bool
                               Provider.of<Web3EthProvider>(context,
                                       listen: false)

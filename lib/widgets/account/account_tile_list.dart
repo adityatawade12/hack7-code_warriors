@@ -24,9 +24,11 @@ class AccountTileList extends StatefulWidget {
 }
 
 class _AccountTileListState extends State<AccountTileList> {
+  var web3;
   @override
-  Widget build(BuildContext context) {
-    var web3;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     if (widget.type == "eth") {
       print("eth");
       web3 = Provider.of<Web3EthProvider>(context, listen: false);
@@ -34,7 +36,10 @@ class _AccountTileListState extends State<AccountTileList> {
       print("sol");
       web3 = Provider.of<Web3SolProvider>(context, listen: false);
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {

@@ -573,6 +573,7 @@ class Web3SolProvider with ChangeNotifier {
   Future<int> getSolExchange() async {
     try {
       var url = Uri.parse(exchangeAPI);
+
       final response = await http.get(url);
       if (json.decode(response.body) == null) {
         return 0;
