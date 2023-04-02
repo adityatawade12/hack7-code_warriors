@@ -6,6 +6,7 @@ import 'package:hack7/providers/web3provider.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_header.dart';
 import 'package:hack7/widgets/account/account_tile_list.dart';
+import 'package:hack7/widgets/account/account_types.dart';
 import 'package:hack7/widgets/exchange_box.dart';
 import 'package:hack7/widgets/title_view.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +30,9 @@ class _AccountScreenState extends State<AccountScreen>
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-          parent: widget.animationController!,
-          curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)
-      )
-    );
+        CurvedAnimation(
+            parent: widget.animationController!,
+            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
 
     // await ve3.fetchStoredAccounts();
     // print(ve3.storedAccounts);
@@ -89,20 +88,20 @@ class _AccountScreenState extends State<AccountScreen>
         animationController: widget.animationController!,
       ),
     );
-    listViews.add(
-      AccountsHeader(
-        titleTxt: 'My Accounts',
-        subTxt: 'Add Account',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 0, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-        onGoBack: onGoBack,
-      ),
-    );
+    // listViews.add(
+    //   AccountsHeader(
+    //     titleTxt: 'My Accounts',
+    //     subTxt: 'Add Account',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve: const Interval((1 / count) * 0, 1.0,
+    //             curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //     onGoBack: onGoBack,
+    //   ),
+    // );
 
-    listViews.add(AccountTileList(
+    listViews.add(AccountTypes(
       animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
           parent: widget.animationController!,
           curve:
@@ -110,6 +109,15 @@ class _AccountScreenState extends State<AccountScreen>
       animationController: widget.animationController!,
       onGoBack: onGoBack,
     ));
+
+    // listViews.add(AccountTileList(
+    //   animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //       parent: widget.animationController!,
+    //       curve:
+    //           const Interval((1 / 10) * 7, 1.0, curve: Curves.fastOutSlowIn))),
+    //   animationController: widget.animationController!,
+    //   onGoBack: onGoBack,
+    // ));
   }
 
   Future<bool> getData() async {
@@ -253,10 +261,13 @@ class _AccountScreenState extends State<AccountScreen>
                                       size: 35,
                                       // color: ,
                                     )),
-                                  FutureBuilder(
-                                    future: Provider.of<Web3EthProvider>(context, listen: false)
+                                FutureBuilder(
+                                    future: Provider.of<Web3EthProvider>(
+                                            context,
+                                            listen: false)
                                         .getPaymentRequests(
-                                            Provider.of<AuthService>(context, listen: false)
+                                            Provider.of<AuthService>(context,
+                                                    listen: false)
                                                 .loggedInUser
                                                 .vpa),
                                     builder: ((ct, snapshot) {
@@ -291,9 +302,7 @@ class _AccountScreenState extends State<AccountScreen>
                                         height: 0,
                                         width: 0,
                                       );
-                                    }
-                                  )
-                                )
+                                    }))
                               ],
                             ),
                           ],

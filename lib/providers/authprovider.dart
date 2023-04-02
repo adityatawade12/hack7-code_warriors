@@ -8,29 +8,34 @@ import 'package:pushy_flutter/pushy_flutter.dart';
 class LoggedInUser {
   final String name;
   final String vpa;
-  final String primaryAccount;
+  final String primaryAccountSol;
+  final String primaryAccountEth;
 
-  LoggedInUser(this.name, this.vpa, this.primaryAccount);
+  LoggedInUser(
+      this.name, this.vpa, this.primaryAccountSol, this.primaryAccountEth);
 }
 
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String uid = "";
   String primaryAddress = "";
-  late LoggedInUser loggedInUser;
+  LoggedInUser loggedInUser = LoggedInUser('', '', '', '');
 
   Future signIn(String email, String password) async {
     try {
       var user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      uid = user.user!.uid;
-      var db = FirebaseFirestore.instance;
-      var userData = await db.collection('users').doc(user.user!.uid).get();
-      var data = userData.data();
-      primaryAddress = userData.data()!['vpa'];
-      loggedInUser =
-          LoggedInUser(data!['name'], data['vpa'], data['primaryAccount']);
+      // uid = user.user!.uid;
+      // var db = FirebaseFirestore.instance;
+      // var userData = await db.collection('users').doc(user.user!.uid).get();
+      // var data = userData.data();
+      // primaryAddress = userData.data()!['vpa'];
+      // loggedInUser =
+      //     LoggedInUser(data!['name'], data['vpa'], data['primaryAccount']);
+      if (user == null) {
+        return null;
+      }
       getUserData();
       notifyListeners();
       return user;
@@ -46,8 +51,8 @@ class AuthService with ChangeNotifier {
     var userData = await db.collection('users').doc(uid).get();
     var data = userData.data();
     primaryAddress = userData.data()!['vpa'];
-    loggedInUser =
-        LoggedInUser(data!['name'], data['vpa'], data['primaryAccount']);
+    loggedInUser = LoggedInUser(data!['name'], data['vpa'],
+        data['primaryAccountSol'], data['primaryAccountEth']);
     // final fcmToken = await FirebaseMessaging.instance.getToken();
     print("fcm token");
     var token = await Pushy.getDeviceCredentials() as Map;
@@ -69,12 +74,17 @@ class AuthService with ChangeNotifier {
       final userDb = <String, dynamic>{
         "name": name,
         "vpa": vpa,
-        "primaryAccount": "",
-        "accounts": [],
+        "primaryAccountSol": "",
+        "primaryAccountEth": "",
+        "sol": [],
+        "eth": [],
         "notifId": token["token"]
       };
+      print(userDb);
       var db = FirebaseFirestore.instance;
-      await db.collection("users").doc(credential.user!.uid).set(userDb);
+      var o =
+          await db.collection("users").doc(credential.user!.uid).set(userDb);
+      print("O");
       getUserData();
       return true;
     } on FirebaseAuthException catch (e) {

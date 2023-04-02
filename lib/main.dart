@@ -19,12 +19,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hack7/themes/apptheme.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:pushy_flutter/pushy_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  String deviceToken = await Pushy.register();
+  Pushy.listen();
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.initFlutter(directory.path);
   runApp(const MyApp());
@@ -76,7 +79,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
- 
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 

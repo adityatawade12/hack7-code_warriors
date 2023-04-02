@@ -62,7 +62,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print(vpaExist);
       }));
     });
-
   }
 
   _backgroundGradient() {
@@ -282,58 +281,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 "${vpaController.text}@cryptopay");
                                             if (status) {
                                               Navigator.of(context)
-                                                  .pushReplacementNamed(HomeScreen.routename);
+                                                  .pushReplacementNamed(
+                                                      HomeScreen.routename);
                                             }
+                                            print("val");
                                           }
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: const [
-                                              Icon(Icons.check),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text("Create Account",
-                                                style: TextStyle(fontSize: 20)
-                                              ),
-                                      ],
-                                    )
-                                  )
-                                ),
-                              ),
-                            ]
-                          )
-                        ),
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: const [
+                                                Icon(Icons.check),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text("Create Account",
+                                                    style: TextStyle(
+                                                        fontSize: 20)),
+                                              ],
+                                            ))),
+                                  ),
+                                ])),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              child: const Text("Already have an account?",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                child: const Text("Already have an account?",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold)),
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, LoginScreen.routename);
+                                },
                               )
-                            ),
-                            onTap: () {
-                              Navigator.pushReplacementNamed(
-                                context, LoginScreen.routename);
-                              },
-                            )
-                          ]
-                        )
+                            ])
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-          ]
-        ),
-      )
-    );
+          ]),
+        ));
   }
 }

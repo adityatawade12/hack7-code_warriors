@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hack7/providers/authprovider.dart';
 import 'package:hack7/screens/accounts/add_accounts_screen.dart';
+import 'package:hack7/screens/home.dart';
+import 'package:provider/provider.dart';
 
 import 'auth/login_screen.dart';
 
@@ -18,9 +21,19 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    var auth = Provider.of<AuthService>(context, listen: false);
 
-    Timer(Duration(seconds: 4),
-        () => Navigator.pushReplacementNamed(context, LoginScreen.routename));
+    if (auth.currentUser == 0) {
+      Timer(Duration(seconds: 4),
+          () => Navigator.pushReplacementNamed(context, LoginScreen.routename));
+    } else {
+      auth.getUserData().then((value) async {
+        Timer(
+            Duration(seconds: 1),
+            () =>
+                Navigator.pushReplacementNamed(context, HomeScreen.routename));
+      });
+    }
   }
 
   @override

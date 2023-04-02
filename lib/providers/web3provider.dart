@@ -59,7 +59,7 @@ class Web3EthProvider with ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
-      "accounts": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
+      "eth": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
     });
     notifyListeners();
 
@@ -95,7 +95,7 @@ class Web3EthProvider with ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
-      "accounts": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
+      "eth": FS.FieldValue.arrayUnion([newAccount.accountAddress]),
     });
 
     notifyListeners();
@@ -608,10 +608,10 @@ class Web3SolProvider with ChangeNotifier {
     // BigInt m = BigInt.from(amt);
     // BigInt x = m * we ~/ c;
 
-    var we = 1000000000;
+    var lam = 1000000000;
     var c = ex;
     var m = amt;
-    var x = m * we ~/ c;
+    var x = amt / ex;
 
     var blkhash = (await connection.getLatestBlockhash()).blockhash;
     print(blkhash);
@@ -815,10 +815,12 @@ class Web3SolProvider with ChangeNotifier {
   }
 
   Future getPayableAmount(amt, senderAddress, recvAddress) async {
+    final cluster = web3.Cluster.devnet;
+    final connection = web3.Connection(cluster);
     final client = Web3Client(rpcUrl, http.Client());
 
     print(senderAddress);
-    final address = EthereumAddress.fromHex(recvAddress);
+    final address1 = web3.PublicKey.fromString(senderAddress);
     // final credentials = EthPrivateKey.fromHex(privKey);
     var ex = await getSolExchange();
     // BigInt we = BigInt.from(1000000000000000000);
@@ -829,7 +831,25 @@ class Web3SolProvider with ChangeNotifier {
     var we = 1000000000;
     var c = ex;
     var m = amt;
-    var x = m * we ~/ c;
+    var x = amt / ex;
+
+    var blkhash = (await connection.getLatestBlockhash()).blockhash;
+    print(blkhash);
+    // Create a System Program instruction to transfer 1 SOL from [address1] to [address2].
+    final transaction =
+        web3.Transaction(feePayer: address1, recentBlockhash: blkhash);
+    transaction.add(
+      SystemProgram.transfer(
+        fromPublicKey: address1,
+        toPublicKey: web3.PublicKey.fromString(recvAddress),
+        lamports: web3.solToLamports(x),
+      ),
+    );
+
+    // "0x858c4f9506ddf2904d14aa619580e193cba4bfb4"
+    var maxgas =
+        await connection.getFeeForMessage(transaction.compileMessage());
+    return maxgas * x;
 
     // ;
     // BigInt maxgas = await client.estimateGas(

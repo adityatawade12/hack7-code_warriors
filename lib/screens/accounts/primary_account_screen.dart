@@ -7,7 +7,6 @@ import 'package:hack7/themes/apptheme.dart';
 import 'package:hack7/widgets/account/account_radio_tile.dart';
 import 'package:provider/provider.dart';
 
-
 class PrimaryAccountScreen extends StatefulWidget {
   static const routename = "/primary";
   const PrimaryAccountScreen({Key? key}) : super(key: key);
@@ -31,20 +30,17 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
   @override
   void initState() {
     animationController = AnimationController(
-      duration: const Duration(milliseconds: 600), vsync: this
-    );
+        duration: const Duration(milliseconds: 600), vsync: this);
     // tabBody = AccountScreen(animationController: animationController);
-    
+
     selectedAcc = Provider.of<AuthService>(context, listen: false)
         .loggedInUser
-        .primaryAccount;
+        .primaryAccountEth;
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: animationController!,
             curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
 
-    // await ve3.fetchStoredAccounts();
-    // print(ve3.storedAccounts);
     listViews = [];
     addAllListData();
 
@@ -144,19 +140,14 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
           groupval: selectedAcc,
           func: setPrimaryAcc,
           animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-              parent: animationController!,
-              curve: const Interval(
-                (1 / 10) * 8, 1.0,
-                curve: Curves.fastOutSlowIn
-              )
-            )
-          ),
+              CurvedAnimation(
+                  parent: animationController!,
+                  curve: const Interval((1 / 10) * 8, 1.0,
+                      curve: Curves.fastOutSlowIn))),
           animationController: animationController,
         );
       },
     );
-
   }
 
   Widget getAppBarUI() {
@@ -209,8 +200,7 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
                                   Icons.arrow_back,
                                   color: AppTheme.nearlyWhite,
                                   size: 30,
-                                )
-                            ),
+                                )),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -236,7 +226,7 @@ class _PrimaryAccountScreenState extends State<PrimaryAccountScreen>
                                     Radius.circular(32.0)),
                                 onTap: () async {
                                   await auth.updatePrimaryAccount(selectedAcc);
-                                  
+
                                   animationController?.reverse().then((value) {
                                     Navigator.of(context).pop();
                                   });
